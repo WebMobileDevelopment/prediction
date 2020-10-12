@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const WebpackRTLPlugin = require('webpack-rtl-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,57 +11,74 @@ const WebpackRTLPlugin = require('webpack-rtl-plugin');
  |
  */
 
-mix.sass('resources/assets/sass/frontend/app.scss', 'public/css/frontend.css')
-    .sass('resources/assets/sass/backend/app.scss', 'public/css/backend.css')
-    .styles([
-        'public/css/plugin/datatables/jquery.dataTables.min.css',
-        'public/css/backend/plugin/datatables/dataTables.bootstrap.min.css',
-        'public/css/plugin/datatables/buttons.dataTables.min.css',
-        'public/js/select2/select2.css',
-        'public/css/bootstrap.min.css',
-        'public/css/custom-style.css',
-        // 'public/css/loader.css',
-        'public/css/bootstrap-datetimepicker.min.css',
-        'client/build/client-modules.min.css',
-    ], 'public/css/backend-custom.css')
-    .js([
-        'resources/assets/js/frontend/app.js',
-        'resources/assets/js/plugin/sweetalert/sweetalert.min.js',
-        'resources/assets/js/plugins.js',
-        'client/build/client-modules.min.js',
-    ], 'public/js/frontend.js')
-    .js([
-        'resources/assets/js/backend/app.js',
-        'resources/assets/js/plugin/sweetalert/sweetalert.min.js',
-        'resources/assets/js/plugins.js'
-    ], 'public/js/backend.js')
-    //Copying all directories of tinymce to public folder
-    .copyDirectory('node_modules/tinymce/plugins', 'public/js/plugins')
-    .copyDirectory('node_modules/tinymce/skins', 'public/js/skins')
-    .copyDirectory('node_modules/tinymce/themes', 'public/js/themes')
-    .scripts([
-        "node_modules/moment/moment.js",
-        "node_modules/select2/dist/js/select2.full.js",
-        "public/js/bootstrap-datetimepicker.min.js",
-        "public/js/backend/custom-file-input.js",
-        "public/js/backend/notification.js",
-        "public/js/backend/admin.js"
-    ], 'public/js/backend-custom.js')
-    //Datatable js
-    .scripts([
-        'node_modules/datatables.net/js/jquery.dataTables.js',
-        'public/js/plugin/datatables/dataTables.bootstrap.min.js',
-        'node_modules/datatables.net-buttons/js/dataTables.buttons.js',
-        'node_modules/datatables.net-buttons/js/buttons.flash.js',
-        'public/js/plugin/datatables/jszip.min.js',
-        'public/js/plugin/datatables/pdfmake.min.js',
-        'public/js/plugin/datatables/vfs_fonts.js',
-        'node_modules/datatables.net-buttons/js/buttons.html5.js',
-        'node_modules/datatables.net-buttons/js/buttons.print.js',
-    ], 'public/js/dataTable.js')
-    .webpackConfig({
-        plugins: [
-            new WebpackRTLPlugin('/css/[name].rtl.css')
-        ]
-    })
-    .version();
+//mix.js('resources/js/app.js', 'public/js')
+//mix.sass('resources/sass/app.scss', 'public/css');
+
+//**************** CSS ******************** 
+//css
+//mix.copy('resources/vendors/pace-progress/css/pace.min.css', 'public/css');
+mix.copy('node_modules/@coreui/chartjs/dist/css/coreui-chartjs.css', 'public/css');
+mix.copy('node_modules/cropperjs/dist/cropper.css', 'public/css');
+//main css
+mix.sass('resources/sass/style.scss', 'public/css');
+
+//************** SCRIPTS ****************** 
+// general scripts
+mix.copy('node_modules/@coreui/utils/dist/coreui-utils.js', 'public/js');
+mix.copy('node_modules/axios/dist/axios.min.js', 'public/js');
+//mix.copy('node_modules/pace-progress/pace.min.js', 'public/js');  
+mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js', 'public/js');
+// views scripts
+mix.copy('node_modules/chart.js/dist/Chart.min.js', 'public/js');
+mix.copy('node_modules/@coreui/chartjs/dist/js/coreui-chartjs.bundle.js', 'public/js');
+
+mix.copy('node_modules/cropperjs/dist/cropper.js', 'public/js');
+// details scripts
+mix.copy('resources/js/coreui/main.js', 'public/js');
+mix.copy('resources/js/coreui/colors.js', 'public/js');
+mix.copy('resources/js/coreui/charts.js', 'public/js');
+mix.copy('resources/js/coreui/widgets.js', 'public/js');
+mix.copy('resources/js/coreui/popovers.js', 'public/js');
+mix.copy('resources/js/coreui/tooltips.js', 'public/js');
+// details scripts admin-panel
+mix.js('resources/js/coreui/menu-create.js', 'public/js');
+mix.js('resources/js/coreui/menu-edit.js', 'public/js');
+mix.js('resources/js/coreui/media.js', 'public/js');
+mix.js('resources/js/coreui/media-cropp.js', 'public/js');
+//*************** OTHER ****************** 
+//fonts
+mix.copy('node_modules/@coreui/icons/fonts', 'public/fonts');
+//icons
+mix.copy('node_modules/@coreui/icons/css/free.min.css', 'public/css');
+mix.copy('node_modules/@coreui/icons/css/brand.min.css', 'public/css');
+mix.copy('node_modules/@coreui/icons/css/flag.min.css', 'public/css');
+mix.copy('node_modules/@coreui/icons/svg/flag', 'public/svg/flag');
+
+mix.copy('node_modules/@coreui/icons/sprites/', 'public/icons/sprites');
+//images
+mix.copy('resources/assets', 'public/assets');
+
+// var LiveReloadPlugin = require('webpack-livereload-plugin');
+
+
+// mix.options({
+//     hmrOptions: {
+//         host: 'localhost',
+//         port: 8080
+//     }
+// });
+
+// mix.webpackConfig({
+//     plugins: [
+//         new LiveReloadPlugin()
+//     ]
+// });
+// mix.browserSync('127.0.0.1:8000');
+
+// let url = process.env.APP_URL.replace(/(^\w+:|^)\/\//, '');
+// mix.options({
+//    hmrOptions: {
+//        host: url,
+//        port: 8080 // Can't use 443 here because address already in use
+//    }
+// })

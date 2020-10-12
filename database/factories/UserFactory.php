@@ -1,42 +1,43 @@
 <?php
 
-use App\Models\Access\User\User;
-use Faker\Generator;
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User as User;
 
-$factory->define(User::class, function (Generator $faker) {
-    static $password;
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-    return [
-        'first_name'        => $faker->name,
-        'last_name'         => $faker->name,
-        'email'             => $faker->safeEmail,
-        'password'          => $password ?: $password = bcrypt('secret'),
-        'confirmation_code' => md5(uniqid(mt_rand(), true)),
-        'remember_token'    => Str::random(10),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'menuroles' => 'user'
+        ];
+    }
 
-$factory->state(User::class, 'active', function () {
-    return [
-        'status' => 1,
-    ];
-});
-
-$factory->state(User::class, 'inactive', function () {
-    return [
-        'status' => 0,
-    ];
-});
-
-$factory->state(User::class, 'confirmed', function () {
-    return [
-        'confirmed' => 1,
-    ];
-});
-
-$factory->state(User::class, 'unconfirmed', function () {
-    return [
-        'confirmed' => 0,
-    ];
-});
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'menuroles' => 'user,admin',
+            ];
+        });
+    }
+}
