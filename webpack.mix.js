@@ -1,5 +1,8 @@
 const mix = require('laravel-mix');
 
+
+
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,8 +14,8 @@ const mix = require('laravel-mix');
  |
  */
 
-//mix.js('resources/js/app.js', 'public/js')
-//mix.sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/app.js', 'public/js');
+mix.sass('resources/sass/app.scss', 'public/css');
 
 //**************** CSS ******************** 
 //css
@@ -25,11 +28,11 @@ mix.sass('resources/sass/style.scss', 'public/css');
 //************** SCRIPTS ****************** 
 // general scripts
 mix.copy('node_modules/@coreui/utils/dist/coreui-utils.js', 'public/js');
-mix.copy('node_modules/axios/dist/axios.min.js', 'public/js');
+mix.copy('node_modules/axios/dist/axios.min.js', 'public/js'); 
 //mix.copy('node_modules/pace-progress/pace.min.js', 'public/js');  
-mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js', 'public/js');
+mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js', 'public/js'); 
 // views scripts
-mix.copy('node_modules/chart.js/dist/Chart.min.js', 'public/js');
+mix.copy('node_modules/chart.js/dist/Chart.min.js', 'public/js'); 
 mix.copy('node_modules/@coreui/chartjs/dist/js/coreui-chartjs.bundle.js', 'public/js');
 
 mix.copy('node_modules/cropperjs/dist/cropper.js', 'public/js');
@@ -58,27 +61,16 @@ mix.copy('node_modules/@coreui/icons/sprites/', 'public/icons/sprites');
 //images
 mix.copy('resources/assets', 'public/assets');
 
-// var LiveReloadPlugin = require('webpack-livereload-plugin');
 
-
-// mix.options({
-//     hmrOptions: {
-//         host: 'localhost',
-//         port: 8080
-//     }
-// });
-
-// mix.webpackConfig({
-//     plugins: [
-//         new LiveReloadPlugin()
-//     ]
-// });
-// mix.browserSync('127.0.0.1:8000');
-
-// let url = process.env.APP_URL.replace(/(^\w+:|^)\/\//, '');
-// mix.options({
-//    hmrOptions: {
-//        host: url,
-//        port: 8080 // Can't use 443 here because address already in use
-//    }
-// })
+// version does not work in hmr mode
+if (process.env.npm_lifecycle_event !== 'hot') {
+    mix.version()
+  }
+  const path = require('path');
+  // fix css files 404 issue
+  mix.webpackConfig({
+    devServer: {
+      contentBase: path.resolve(__dirname, 'public'),
+    }
+  });
+  mix.browserSync('127.0.0.1:8000');

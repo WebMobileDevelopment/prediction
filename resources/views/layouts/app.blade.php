@@ -10,15 +10,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -61,7 +60,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -81,9 +80,6 @@
             @yield('content')
         </main>
     </div>
-    @if (config('app.env') == 'local')
-        <script src="http://localhost:8000/livereload.js"></script>
-    @endif
 </body>
 
 </html>
