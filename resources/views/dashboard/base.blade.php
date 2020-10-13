@@ -58,6 +58,7 @@
 </script>
 
 <link href="{{ asset('css/coreui-chartjs.css') }}" rel="stylesheet">
+
 </head>
 
 
@@ -81,13 +82,18 @@
     </div>
 
 
-
+    @jquery
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
+    
     @yield('javascript')
 
-
+    <script>
+        // $(function(){
+        //     console.log(moment());
+        // })
+    </script>
 
 
 </body>

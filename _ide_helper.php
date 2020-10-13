@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.9.0.
+ * Generated for Laravel 8.0.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2549,7 +2549,7 @@
          * Begin broadcasting an event.
          *
          * @param mixed|null $event
-         * @return \Illuminate\Broadcasting\PendingBroadcast 
+         * @return \Illuminate\Broadcasting\PendingBroadcast|void 
          * @static 
          */ 
         public static function event($event = null)
@@ -6469,8 +6469,6 @@
             /**
      * 
      *
-     * @method static void write(string $level, string $message, array $context = [])
-     * @method static void listen(\Closure $callback)
      * @see \Illuminate\Log\Logger
      */ 
         class Log {
@@ -6704,10 +6702,6 @@
             /**
      * 
      *
-     * @method static mixed laterOn(string $queue, \DateTimeInterface|\DateInterval|int $delay, \Illuminate\Contracts\Mail\Mailable|string|array $view)
-     * @method static mixed queueOn(string $queue, \Illuminate\Contracts\Mail\Mailable|string|array $view)
-     * @method static void plain(string $view, array $data, $callback)
-     * @method static void html(string $html, $callback)
      * @see \Illuminate\Mail\Mailer
      * @see \Illuminate\Support\Testing\Fakes\MailFake
      */ 
@@ -12016,17 +12010,6 @@
                         $instance->setPreviousUrl($url);
         }
                     /**
-         * Specify that the user has confirmed their password.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function passwordConfirmed()
-        {
-                        /** @var \Illuminate\Session\Store $instance */
-                        $instance->passwordConfirmed();
-        }
-                    /**
          * Get the underlying session handler implementation.
          *
          * @return \SessionHandlerInterface 
@@ -12789,7 +12772,7 @@
          * Create a signed route URL for a named route.
          *
          * @param string $name
-         * @param mixed $parameters
+         * @param array $parameters
          * @param \DateTimeInterface|\DateInterval|int|null $expiration
          * @param bool $absolute
          * @return string 
@@ -13719,7 +13702,7 @@
                     /**
          * Start a component rendering process.
          *
-         * @param \Illuminate\Contracts\View\View|\Illuminate\Contracts\Support\Htmlable|\Closure|string $view
+         * @param \Illuminate\View\View|\Illuminate\Contracts\Support\Htmlable|\Closure|string $view
          * @param array $data
          * @return void 
          * @static 
@@ -14157,10 +14140,64 @@
         class Str {
          
     }
+            /**
+     * 
+     *
+     */ 
+        class Carbon {
+         
+    }
      
 }
 
-        namespace Facade\Ignition\Facades { 
+        namespace App\Models { 
+            /**
+     * App\Models\User
+     *
+     * @property int $id
+     * @property string $name
+     * @property string $email
+     * @property \Illuminate\Support\Carbon|null $email_verified_at
+     * @property string $password
+     * @property string $address
+     * @property string $menuroles
+     * @property string|null $remember_token
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $deleted_at
+     * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+     * @property-read int|null $notifications_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+     * @property-read int|null $permissions_count
+     * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+     * @property-read int|null $roles_count
+     * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+     * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+     * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+     * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
+     * @method static \Illuminate\Database\Eloquent\Builder|User query()
+     * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereMenuroles($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+     * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+     * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+     * @mixin \Eloquent
+     */ 
+        class User {
+         
+    }
+     
+}
+
+    namespace Facade\Ignition\Facades { 
             /**
      * Class Flare.
      *
@@ -16113,20 +16150,6 @@ namespace  {
             }
              
                 /**
-             * Add a subquery cross join to the query.
-             *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-             * @param string $as
-             * @return \Illuminate\Database\Query\Builder 
-             * @static 
-             */ 
-            public static function crossJoinSub($query, $as)
-            {
-                                /** @var \Illuminate\Database\Query\Builder $instance */
-                                return $instance->crossJoinSub($query, $as);
-            }
-             
-                /**
              * Merge an array of where clauses and bindings.
              *
              * @param array $wheres
@@ -16379,7 +16402,7 @@ namespace  {
                 /**
              * Add a where between statement to the query.
              *
-             * @param string|\Illuminate\Database\Query\Expression $column
+             * @param string $column
              * @param array $values
              * @param string $boolean
              * @param bool $not
@@ -17437,7 +17460,7 @@ namespace  {
             }
              
                 /**
-             * Insert new records into the database.
+             * Insert a new record into the database.
              *
              * @param array $values
              * @return bool 
@@ -17450,7 +17473,7 @@ namespace  {
             }
              
                 /**
-             * Insert new records into the database while ignoring errors.
+             * Insert a new record into the database while ignoring errors.
              *
              * @param array $values
              * @return int 
@@ -17758,6 +17781,8 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
+            class Carbon extends \Illuminate\Support\Carbon {}
+            class User extends \App\Models\User {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Image extends \Intervention\Image\Facades\Image {}
             class Toastr extends \Yoeunes\Toastr\Facades\Toastr {}

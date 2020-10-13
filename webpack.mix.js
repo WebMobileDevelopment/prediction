@@ -28,11 +28,11 @@ mix.sass('resources/sass/style.scss', 'public/css');
 //************** SCRIPTS ****************** 
 // general scripts
 mix.copy('node_modules/@coreui/utils/dist/coreui-utils.js', 'public/js');
-mix.copy('node_modules/axios/dist/axios.min.js', 'public/js'); 
-//mix.copy('node_modules/pace-progress/pace.min.js', 'public/js');  
-mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js', 'public/js'); 
+mix.copy('node_modules/axios/dist/axios.min.js', 'public/js');
+mix.copy('node_modules/moment/moment.js', 'public/js');
+mix.copy('node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js', 'public/js');
 // views scripts
-mix.copy('node_modules/chart.js/dist/Chart.min.js', 'public/js'); 
+mix.copy('node_modules/chart.js/dist/Chart.min.js', 'public/js');
 mix.copy('node_modules/@coreui/chartjs/dist/js/coreui-chartjs.bundle.js', 'public/js');
 
 mix.copy('node_modules/cropperjs/dist/cropper.js', 'public/js');
@@ -65,12 +65,12 @@ mix.copy('resources/assets', 'public/assets');
 // version does not work in hmr mode
 if (process.env.npm_lifecycle_event !== 'hot') {
     mix.version()
-  }
-  const path = require('path');
-  // fix css files 404 issue
-  mix.webpackConfig({
+}
+const path = require('path');
+// fix css files 404 issue
+mix.webpackConfig({
     devServer: {
-      contentBase: path.resolve(__dirname, 'public'),
+        contentBase: path.resolve(__dirname, 'public'),
     }
-  });
-  mix.browserSync('127.0.0.1:8000');
+});
+mix.browserSync('127.0.0.1:8000');
