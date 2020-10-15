@@ -14,6 +14,7 @@
 Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['get.menu']], function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
         Route::group(['middleware' => ['role:user']], function () {
             Route::get('/colors', function () {
                 return view('dashboard.colors');
@@ -183,6 +184,28 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
-
+Route::get('/503', function () {
+    return view('errors.503');
+})->name('maintain');
+Route::get('/contact', function () {
+    return  view('auth.contact');
+})->name('contact');
+Route::get('/terms', function () {
+    return  view('auth.terms');
+})->name('terms');
+Route::get('/faq', function () {
+    return  view('auth.faq');
+})->name('faq');
+Route::get('/account', function () {
+    return  view('auth.account');
+})->name('account');
+Route::get('/construction', function () {
+    return  view('auth.construction');
+})->name('construction');
+Route::get('/wallet', function () {
+    return  view('auth.wallet');
+})->name('wallet');
+Route::get('/learning', function () {
+    return  view('auth.learning');
+})->name('learning');
 Auth::routes();
-

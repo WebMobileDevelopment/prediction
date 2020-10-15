@@ -86,5 +86,6 @@ class HomeController extends Controller
             'week_days' => $week_days,
         );
         return view('dashboard.homepage')->with(array('data' => $data));
+        // return view('auth.terms')->with(array('data' => $data));
     }
 }

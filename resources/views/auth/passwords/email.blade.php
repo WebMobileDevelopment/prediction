@@ -1,47 +1,43 @@
-@extends('layouts.app')
+@extends('front.layouts.auth.base')
+@section('page-content')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <div class="page-content header-clear-medium">
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+            <div class="card card-style">
+                <div class="content mb-0">
+                    <h1 class="text-center"><i class="fa fa-question-circle fa-3x color-highlight mt-3"></i></h1>
+                    <h1 class="pt-3 mt-3 text-center font-900 font-40 text-uppercase">Forgot</h1>
+                    <p class="text-center color-highlight font-11">Let's get you back into your account</p>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <div class="input-style has-icon input-style-1 input-required">
+                        <i class="input-icon fa fa-at color-theme"></i>
+                        <span>Email</span>
+                        <em>(required)</em>
+                        <input id="email" type="email" placeholder="Email"
+                            class="form-control @error('email') is-invalid @enderror" name="email"
+                            value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+                        @error('email')
+                        <p class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </p>
+                        @enderror
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    </div>
+                    <button type="submit"
+                        class="btn btn-m mt-4 mb-3 btn-full rounded-sm bg-highlight text-uppercase font-900">Send
+                        Reset Instructions</button>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <p class="text-center mb-3">
+                        <a href="{{ route('login') }}" class="color-theme opacity-50 font-12">Back to Login</a>
+                    </p>
                 </div>
             </div>
-        </div>
+            @include('auth.footer')
+        </form>
     </div>
-</div>
+    <!-- End of Page Content-->
 @endsection
