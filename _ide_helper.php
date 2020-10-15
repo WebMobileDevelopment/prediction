@@ -14438,6 +14438,52 @@
      
 }
 
+    namespace hisorange\BrowserDetect { 
+            /**
+     * Facading class to mask the service behind the "Browser" class.
+     *
+     * @example Browser::isMobile();
+     * @package hisorange\BrowserDetect
+     */ 
+        class Facade {
+                    /**
+         * Read the applied final config.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function config()
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->config();
+        }
+                    /**
+         * 
+         *
+         * @inheritdoc 
+         * @static 
+         */ 
+        public static function detect()
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->detect();
+        }
+                    /**
+         * 
+         *
+         * @inheritdoc 
+         * @static 
+         */ 
+        public static function parse($agent)
+        {
+                        /** @var \hisorange\BrowserDetect\Parser $instance */
+                        return $instance->parse($agent);
+        }
+         
+    }
+     
+}
+
     namespace Intervention\Image\Facades { 
             /**
      * 
@@ -14496,6 +14542,52 @@
         {
                         /** @var \Intervention\Image\ImageManager $instance */
                         return $instance->cache($callback, $lifetime, $returnObj);
+        }
+         
+    }
+     
+}
+
+    namespace Stevebauman\Location\Facades { 
+            /**
+     * 
+     *
+     * @see \Stevebauman\Location\Location
+     */ 
+        class Location {
+                    /**
+         * Creates the selected driver instance and sets the driver property.
+         *
+         * @param \Stevebauman\Location\Driver $driver
+         * @static 
+         */ 
+        public static function setDriver($driver)
+        {
+                        /** @var \Stevebauman\Location\Location $instance */
+                        return $instance->setDriver($driver);
+        }
+                    /**
+         * Sets the default driver from the configuration.
+         *
+         * @throws DriverDoesNotExistException
+         * @static 
+         */ 
+        public static function setDefaultDriver()
+        {
+                        /** @var \Stevebauman\Location\Location $instance */
+                        return $instance->setDefaultDriver();
+        }
+                    /**
+         * Retrieve the users location.
+         *
+         * @param string|null $ip
+         * @return \Stevebauman\Location\Position|bool 
+         * @static 
+         */ 
+        public static function get($ip = null)
+        {
+                        /** @var \Stevebauman\Location\Location $instance */
+                        return $instance->get($ip);
         }
          
     }
@@ -17784,7 +17876,9 @@ namespace  {
             class Carbon extends \Illuminate\Support\Carbon {}
             class User extends \App\Models\User {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
+            class Browser extends \hisorange\BrowserDetect\Facade {}
             class Image extends \Intervention\Image\Facades\Image {}
+            class Location extends \Stevebauman\Location\Facades\Location {}
             class Toastr extends \Yoeunes\Toastr\Facades\Toastr {}
      
 }

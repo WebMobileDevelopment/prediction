@@ -8,7 +8,7 @@
                 <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-primary">
                         <div class="card-body pb-0">
-                            <div class="btn-group float-right">
+                            {{-- <div class="btn-group float-right">
                                 <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <svg class="c-icon">
@@ -18,34 +18,55 @@
                                 <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
                                         href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
                                         class="dropdown-item" href="#">Something else here</a></div>
-                            </div>
-                            <div>Members Registered</div>
-                            <div class="text-value-lg">{{ count($data['users']) }}</div>
+                            </div> --}}
+                            <div>Total Registered</div>
+                            <div class="text-value-lg">{{ $data['users'] }}</div>
                         </div>
                         <div class="c-chart-wrapper mx-3" style="height:90px;">
-                            <canvas class="chart" id="registered-chart" height="90"></canvas>
+                            <canvas class="chart" id="total_registered_chart" height="90"></canvas>
                         </div>
                     </div>
                 </div>
+
                 <!-- /.col-->
                 <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-info">
                         <div class="card-body pb-0">
-                            <button class="btn btn-transparent p-0 float-right" type="button">
+                            {{-- <button class="btn btn-transparent p-0 float-right" type="button">
                                 <svg class="c-icon">
                                     <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-location-pin"></use>
                                 </svg>
-                            </button>
-                            <div class="text-value-lg">9.823</div>
-                            <div>Members online</div>
+                            </button> --}}
+                            <div>Weekly Registers</div>
+                            <div class="text-value-lg">{{$data['weekly_users']}}</div>
                         </div>
                         <div class="c-chart-wrapper mx-3" style="height:90px;">
-                            <canvas class="chart" id="card-chart2" height="90"></canvas>
+                            <canvas class="chart" id="weekly_registers_chart" height="90"></canvas>
                         </div>
                     </div>
                 </div>
+
                 <!-- /.col-->
                 <div class="col-sm-6 col-lg-3">
+                    <div class="card text-white bg-info">
+                        <div class="card-body pb-0">
+                            {{-- <button class="btn btn-transparent p-0 float-right" type="button">
+                                <svg class="c-icon">
+                                    <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-location-pin"></use>
+                                </svg>
+                            </button> --}}
+                            <div>Weekly logins</div>
+                            <div class="text-value-lg">{{$data['logins']}}</div>
+                        </div>
+                        <div class="c-chart-wrapper mx-3" style="height:90px;">
+                            <canvas class="chart" id="weekly_logins_chart" height="90"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.col-->
+
+                {{-- <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-warning">
                         <div class="card-body pb-0">
                             <div class="btn-group float-right">
@@ -66,9 +87,11 @@
                             <canvas class="chart" id="card-chart3" height="90"></canvas>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+
                 <!-- /.col-->
-                <div class="col-sm-6 col-lg-3">
+
+                {{-- <div class="col-sm-6 col-lg-3">
                     <div class="card text-white bg-danger">
                         <div class="card-body pb-0">
                             <div class="btn-group float-right">
@@ -89,7 +112,8 @@
                             <canvas class="chart" id="card-chart4" height="90"></canvas>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                
                 <!-- /.col-->
             </div>
             <!-- /.row-->

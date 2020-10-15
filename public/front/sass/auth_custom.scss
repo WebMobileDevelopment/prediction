@@ -1,0 +1,89 @@
+html,
+body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+    max-width: 400px;
+}
+
+#page {
+    min-height: initial !important;
+    max-height: 700px;
+    overflow-y: scroll;
+    border: solid 1px #56565638;
+    background-color: #ffffff1a;
+}
+
+.header {
+    top: calc(50vh - 350px);
+    max-width: 398px;
+    left: calc(50vw - 199px);
+}
+
+#footer-bar {
+    bottom: calc(50vh - 349px);
+    max-width: 398px;
+    left: calc(50vw - 199px);
+}
+
+.menu.menu-box-bottom {
+    max-width: 400px;
+    left: calc(50vw - 200px);
+    /* bottom: calc(50vh - 348px); */
+}
+
+.footer-menu-hidden {
+    transition: all 100ms ease;
+    transform: none !important;
+}
+
+.menu-box-bottom.menu-active {
+    transform: translate3d(0%, calc(370px - 50vh), 0) !important;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.input-style .text-danger {
+    opacity: initial;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    /* border: 1px solid green;
+            -webkit-box-shadow: 0 0 0px 1000px #000 inset; */
+    -webkit-text-fill-color: dimgrey;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.header-logo-center {
+    background-image: url("front/images/logo.png");
+    background-size: 100%;
+}
+
+.header {
+    .header-title {
+        font-size: 2.5em;
+        width: 100%;
+        margin-left: -50%;
+        span {
+            color: blue;
+        }
+    }
+}

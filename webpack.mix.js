@@ -16,6 +16,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/front/custom.scss', 'public/css/front/custom.css');
+mix.sass('resources/sass/front/auth_custom.scss', 'public/css/front/auth_custom.css');
 
 //**************** CSS ******************** 
 //css
@@ -60,6 +62,7 @@ mix.copy('node_modules/@coreui/icons/svg/flag', 'public/svg/flag');
 mix.copy('node_modules/@coreui/icons/sprites/', 'public/icons/sprites');
 //images
 mix.copy('resources/assets', 'public/assets');
+mix.copy('resources/front', 'public/front');
 
 
 // version does not work in hmr mode

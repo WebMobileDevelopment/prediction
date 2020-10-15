@@ -55,8 +55,8 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasRoles;
     use HasFactory;
-    
     protected $table = 'users';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

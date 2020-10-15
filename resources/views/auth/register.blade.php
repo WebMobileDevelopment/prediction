@@ -21,6 +21,9 @@
                                 </div>
                                 <input class="form-control" type="text" placeholder="{{ __('Name') }}" name="name"
                                     value="{{ old('name') }}" required autofocus>
+                                @if ($errors->has('name'))
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -33,6 +36,9 @@
                                 </div>
                                 <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}"
                                     name="email" value="{{ old('email') }}" required>
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -45,6 +51,9 @@
                                 </div>
                                 <input class="form-control" type="password" placeholder="{{ __('Password') }}"
                                     name="password" required>
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                             <div class="input-group mb-4">
                                 <div class="input-group-prepend">
@@ -57,6 +66,9 @@
                                 </div>
                                 <input class="form-control" type="password" placeholder="{{ __('Confirm Password') }}"
                                     name="password_confirmation" required>
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                @endif
                             </div>
                             <button class="btn btn-block btn-success" type="submit">{{ __('Register') }}</button>
                             <div class="mt-3 mb-3 text-center"> - or - </div>
@@ -84,7 +96,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('javascript')

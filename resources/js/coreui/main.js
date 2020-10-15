@@ -21,48 +21,32 @@ Chart.defaults.global.responsiveAnimationDuration = 1
 document.body.addEventListener('classtoggle', event => {
     if (event.detail.className === 'c-dark-theme') {
         if (document.body.classList.contains('c-dark-theme')) {
-            registeredChart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--primary-dark-theme')
-            cardChart2.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info-dark-theme')
+            total_registered_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--primary-dark-theme')
+            weekly_registers_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info-dark-theme')
+            weekly_logins_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info-dark-theme')
             Chart.defaults.global.defaultFontColor = '#fff'
         } else {
-            registeredChart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--primary')
-            cardChart2.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info')
+            total_registered_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--primary')
+            weekly_registers_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info')
+            weekly_logins_chart.data.datasets[0].pointBackgroundColor = coreui.Utils.getStyle('--info')
             Chart.defaults.global.defaultFontColor = '#646470'
         }
 
-        registeredChart.update()
-        cardChart2.update()
+        total_registered_chart.update()
+        weekly_registers_chart.update()
+        weekly_logins_chart.update()
         mainChart.update()
     }
 })
 
 // eslint-disable-next-line no-unused-vars
 
-// var registered = [0, 0, 0, 0, 0, 0, 0];
-// var week_days = [];
-// var max = 0;
-// for (var i = 0; i < 7; i++) {
-//     users.forEach(user => {
-//         var days = moment().diff(moment(user.created_at), 'days');
-//         if (days > 6 - i) {
-//             registered[i]++;
-//         }
-//     });
-//     if (registered[i] > max) {
-//         max = registered[i];
-//     }
-//     week_days[i] = moment().subtract(6 - i, 'day').format("ddd MMM,DD");
-//     //['January', 'February', 'March', 'April', 'May', 'June', 'July']
-// }
-
-// console.log("registered", registered);
-console.log("data", data)
-const registeredChart = new Chart(document.getElementById('registered-chart'), {
+const total_registered_chart = new Chart(document.getElementById('total_registered_chart'), {
     type: 'line',
     data: {
         labels: data.week_days,
         datasets: [{
-            label: 'Registered',
+            label: 'Total Registered',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
             pointBackgroundColor: coreui.Utils.getStyle('--primary'),
@@ -109,16 +93,16 @@ const registeredChart = new Chart(document.getElementById('registered-chart'), {
 })
 
 // eslint-disable-next-line no-unused-vars
-const cardChart2 = new Chart(document.getElementById('card-chart2'), {
+const weekly_registers_chart = new Chart(document.getElementById('weekly_registers_chart'), {
     type: 'line',
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: data.week_days,
         datasets: [{
-            label: 'My First dataset',
+            label: 'Weekly Registers',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
             pointBackgroundColor: coreui.Utils.getStyle('--info'),
-            data: [1, 18, 9, 17, 34, 22, 11]
+            data: data.weekly_registered.week_data
         }]
     },
     options: {
@@ -141,8 +125,8 @@ const cardChart2 = new Chart(document.getElementById('card-chart2'), {
                 display: false,
                 ticks: {
                     display: false,
-                    min: -4,
-                    max: 39
+                    min: data.weekly_registered.min - 1,
+                    max: data.weekly_registered.max + 1
                 }
             }]
         },
@@ -152,24 +136,25 @@ const cardChart2 = new Chart(document.getElementById('card-chart2'), {
                 borderWidth: 1
             },
             point: {
-                radius: 4,
-                hitRadius: 10,
-                hoverRadius: 4
+                radius: 2,
+                hitRadius: 4,
+                hoverRadius: 2
             }
         }
     }
 })
 
 // eslint-disable-next-line no-unused-vars
-const cardChart3 = new Chart(document.getElementById('card-chart3'), {
+const weekly_logins_chart = new Chart(document.getElementById('weekly_logins_chart'), {
     type: 'line',
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: data.week_days,
         datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,255,255,.2)',
+            label: 'Weekly logins',
+            backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
-            data: [78, 81, 80, 45, 34, 12, 40]
+            pointBackgroundColor: coreui.Utils.getStyle('--info'),
+            data: data.logined.week_data
         }]
     },
     options: {
@@ -179,53 +164,105 @@ const cardChart3 = new Chart(document.getElementById('card-chart3'), {
         },
         scales: {
             xAxes: [{
-                display: false
+                gridLines: {
+                    color: 'transparent',
+                    zeroLineColor: 'transparent'
+                },
+                ticks: {
+                    fontSize: 2,
+                    fontColor: 'transparent'
+                }
             }],
             yAxes: [{
-                display: false
+                display: false,
+                ticks: {
+                    display: false,
+                    min: data.logined.min - 1,
+                    max: data.logined.max + 1
+                }
             }]
         },
         elements: {
             line: {
-                borderWidth: 2
+                tension: 0.00001,
+                borderWidth: 1
             },
             point: {
-                radius: 0,
-                hitRadius: 10,
-                hoverRadius: 4
+                radius: 2,
+                hitRadius: 4,
+                hoverRadius: 2
             }
         }
     }
 })
 
+
 // eslint-disable-next-line no-unused-vars
-const cardChart4 = new Chart(document.getElementById('card-chart4'), {
-    type: 'bar',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgba(255,255,255,.2)',
-            borderColor: 'rgba(255,255,255,.55)',
-            data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
-            barPercentage: 0.6
-        }],
-    },
-    options: {
-        maintainAspectRatio: false,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                display: false
-            }],
-            yAxes: [{
-                display: false
-            }]
-        }
-    }
-})
+// const cardChart3 = new Chart(document.getElementById('card-chart3'), {
+//     type: 'line',
+//     data: {
+//         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+//         datasets: [{
+//             label: 'My First dataset',
+//             backgroundColor: 'rgba(255,255,255,.2)',
+//             borderColor: 'rgba(255,255,255,.55)',
+//             data: [78, 81, 80, 45, 34, 12, 40]
+//         }]
+//     },
+//     options: {
+//         maintainAspectRatio: false,
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             xAxes: [{
+//                 display: false
+//             }],
+//             yAxes: [{
+//                 display: false
+//             }]
+//         },
+//         elements: {
+//             line: {
+//                 borderWidth: 2
+//             },
+//             point: {
+//                 radius: 0,
+//                 hitRadius: 10,
+//                 hoverRadius: 4
+//             }
+//         }
+//     }
+// })
+
+// eslint-disable-next-line no-unused-vars
+// const cardChart4 = new Chart(document.getElementById('card-chart4'), {
+//     type: 'bar',
+//     data: {
+//         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
+//         datasets: [{
+//             label: 'My First dataset',
+//             backgroundColor: 'rgba(255,255,255,.2)',
+//             borderColor: 'rgba(255,255,255,.55)',
+//             data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
+//             barPercentage: 0.6
+//         }],
+//     },
+//     options: {
+//         maintainAspectRatio: false,
+//         legend: {
+//             display: false
+//         },
+//         scales: {
+//             xAxes: [{
+//                 display: false
+//             }],
+//             yAxes: [{
+//                 display: false
+//             }]
+//         }
+//     }
+// })
 
 // eslint-disable-next-line no-unused-vars
 const mainChart = new Chart(document.getElementById('main-chart'), {

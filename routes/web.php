@@ -124,7 +124,6 @@ Route::middleware('auth')->group(function () {
             });
             Route::resource('notes', 'NotesController');
         });
-        Auth::routes();
 
         Route::resource('resource/{table}/resource', 'ResourceController')->names([
             'index'     => 'resource.index',
@@ -184,7 +183,6 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
-
 
 Auth::routes();
 

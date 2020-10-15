@@ -1,6 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/front/custom.css": "/css/front/custom.css",
+    "/css/front/auth_custom.css": "/css/front/auth_custom.css",
     "/css/style.css": "/css/style.css",
     "/js/media.js": "/js/media.js",
     "/js/media-cropp.js": "/js/media-cropp.js",
@@ -23,5 +25,8 @@
     "/js/tooltips.js": "/js/tooltips.js",
     "/css/free.min.css": "/css/free.min.css",
     "/css/brand.min.css": "/css/brand.min.css",
-    "/css/flag.min.css": "/css/flag.min.css"
+    "/css/flag.min.css": "/css/flag.min.css",
+    "/js/app.e5f24d6b0947100ea469.hot-update.js": "/js/app.e5f24d6b0947100ea469.hot-update.js",
+    "/js/app.997205591be9026fd60a.hot-update.js": "/js/app.997205591be9026fd60a.hot-update.js",
+    "/js/app.0b03c0d162329c6ee4f7.hot-update.js": "/js/app.0b03c0d162329c6ee4f7.hot-update.js"
 }
