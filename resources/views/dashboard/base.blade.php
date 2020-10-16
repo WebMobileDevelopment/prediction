@@ -41,6 +41,7 @@
 
 @yield('css')
 
+@jquery
 <!-- Global site tag (gtag.js) - Google Analytics-->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
 <script>
@@ -82,19 +83,11 @@
     </div>
 
 
-    @jquery
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
     
     @yield('javascript')
-
-    <script>
-        // $(function(){
-        //     console.log(moment());
-        // })
-    </script>
-
 
 </body>
 

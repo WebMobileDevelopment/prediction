@@ -16,9 +16,10 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('game_avatar');
+            $table->blob('acitve_avatar')->nullable();
+            $table->blob('inacitve_avatar')->nullable();
             $table->string('description');
-            $table->string('img_url')->nullable();
+            $table->integer('view_order')->default(10000);
             $table->timestamps();
         });
     }

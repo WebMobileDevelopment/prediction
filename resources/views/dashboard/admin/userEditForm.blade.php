@@ -47,25 +47,30 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
                                             <svg class="c-icon c-icon-sm">
-                                                <use xlink:href="/assets/icons/coreui/free-symbol-defs.svg#cui-address-book"></use>
+                                                <use
+                                                    xlink:href="/assets/icons/coreui/free-symbol-defs.svg#cui-address-book">
+                                                </use>
                                             </svg>
                                         </span>
                                     </div>
-                                    <input class="form-control" type="text" placeholder="{{ __('Address') }}"
-                                        name="address" value="{{ $user->address }}">
+                                    <input class="form-control" type="text" placeholder="{{ __('Address') }}" name="address"
+                                        value="{{ $user->address }}">
                                 </div>
                                 <div class="form-group row">
-                                  <label class="col-md-3 col-form-label">Role</label>
-                                  <div class="col-md-9 col-form-label">
-                                    <div class="form-check form-check-inline mr-3">
-                                      <input class="form-check-input" id="inline-radio1" type="radio" value="user" name="menuroles" {{ $user->menuroles=="user"? "checked" :""}}>
-                                      <label class="form-check-label" for="inline-radio1">User</label>
+                                    <label class="col-md-3 col-form-label">Role</label>
+                                    <div class="col-md-9 col-form-label">
+                                        <div class="form-check form-check-inline mr-3">
+                                            <input class="form-check-input" id="inline-radio1" type="radio" value="user"
+                                                name="menuroles" {{ $user->menuroles == 'user' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="inline-radio1">User</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="inline-radio2" type="radio"
+                                                value="user,admin" name="menuroles"
+                                                {{ $user->menuroles == 'user,admin' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="inline-radio2">Admin</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" id="inline-radio2" type="radio" value="user,admin" name="menuroles" {{ $user->menuroles=="user,admin"? "checked" :""}}>
-                                      <label class="form-check-label" for="inline-radio2">Admin</label>
-                                    </div>
-                                  </div>
                                 </div>
                                 {{-- {{ var_dump($user) }} --}}
                                 <button class="btn btn-block btn-success" type="submit">{{ __('Save') }}</button>

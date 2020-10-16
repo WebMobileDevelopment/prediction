@@ -85,6 +85,7 @@ class HomeController extends Controller
             'logined' => $logined,
             'week_days' => $week_days,
         );
+        // return redirect('image-cropper');
         return view('dashboard.homepage')->with(array('data' => $data));
         // return view('auth.terms')->with(array('data' => $data));
     }

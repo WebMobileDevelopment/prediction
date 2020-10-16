@@ -20,7 +20,7 @@ class CreatePlayersTable extends Migration
             $table->string('country');
             $table->string('nationality');
             $table->integer('age');
-            $table->string('photo');
+            $table->blob('photo')->nullable();
             $table->string('description');
             $table->timestamps();
         });

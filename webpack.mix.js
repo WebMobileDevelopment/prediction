@@ -18,6 +18,7 @@ mix.js('resources/js/app.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/css');
 mix.sass('resources/sass/front/custom.scss', 'public/css/front/custom.css');
 mix.sass('resources/sass/front/auth_custom.scss', 'public/css/front/auth_custom.css');
+mix.copy('resources/css/cropper_style.css', 'public/css');
 
 //**************** CSS ******************** 
 //css
@@ -50,6 +51,7 @@ mix.js('resources/js/coreui/menu-create.js', 'public/js');
 mix.js('resources/js/coreui/menu-edit.js', 'public/js');
 mix.js('resources/js/coreui/media.js', 'public/js');
 mix.js('resources/js/coreui/media-cropp.js', 'public/js');
+mix.copy('resources/js/cropper_script.js', 'public/js');
 //*************** OTHER ****************** 
 //fonts
 mix.copy('node_modules/@coreui/icons/fonts', 'public/fonts');

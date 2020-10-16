@@ -28,12 +28,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/widgets', function () {
                 return view('dashboard.widgets');
             });
-            Route::get('/404', function () {
-                return view('dashboard.404');
-            });
-            Route::get('/500', function () {
-                return view('dashboard.500');
-            });
+
             Route::prefix('base')->group(function () {
                 Route::get('/breadcrumb', function () {
                     return view('dashboard.base.breadcrumb');
@@ -137,8 +132,15 @@ Route::middleware('auth')->group(function () {
         ]);
 
         Route::group(['middleware' => ['role:admin']], function () {
-            Route::resource('bread',  'BreadController');   //create BREAD (resource)
-            Route::resource('users',        'UsersController')->except(['create', 'store']);
+            Route::resource('bread',        BreadController::class); //create BREAD (resource)
+            Route::resource('games',        admin\GamesController::class);
+            Route::prefix('games')->group(function () {
+                Route::get('/',         'admin\GamesController@index')->name('games');
+                Route::post('/',        'admin\GamesController@index')->name('games.create');
+                Route::put('/',         'admin\GamesController@update')->name('games.update');
+                Route::delete('/',      'admin\GamesController@delete')->name('games.delete');
+            });
+            Route::resource('users',        UsersController::class)->except(['create', 'store']);
             Route::resource('roles',        'RolesController');
             Route::resource('mail',        'MailController');
             Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');
@@ -184,9 +186,16 @@ Route::middleware('auth')->group(function () {
         });
     });
 });
+
+Route::get('/404', function () {
+    return view('errors.404');
+});
+Route::get('/500', function () {
+    return view('errors.500');
+});
 Route::get('/503', function () {
     return view('errors.503');
-})->name('maintain');
+});
 Route::get('/contact', function () {
     return  view('auth.contact');
 })->name('contact');
@@ -208,4 +217,6 @@ Route::get('/wallet', function () {
 Route::get('/learning', function () {
     return  view('auth.learning');
 })->name('learning');
+Route::get('image-cropper', 'ImageCropperController@index');
+Route::post('image-cropper/upload', 'ImageCropperController@upload');
 Auth::routes();

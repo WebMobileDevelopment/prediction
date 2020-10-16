@@ -17,7 +17,7 @@ class CreateLeaguesTable extends Migration
             $table->id();
             $table->integer('game_id');
             $table->string('league_name');
-            $table->string('league_avatar');
+            $table->blob('avatar')->nullable();
             $table->integer('team1_id');
             $table->integer('team2_id');
             $table->string('description');

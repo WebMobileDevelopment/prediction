@@ -19,7 +19,7 @@ class CreateTeamsTable extends Migration
             $table->string('team_name');
             $table->string('country');
             $table->string('location');
-            $table->string('team_avatar');
+            $table->blob('avatar')->nullable();
             $table->string('description');
             $table->timestamps();
         });
