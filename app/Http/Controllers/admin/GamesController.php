@@ -11,38 +11,42 @@ class GamesController extends Controller
     public function index()
     {
         $games = Games::orderBy('view_order')->get();
-        return view('dashboard.admin.gamesList')->with(['games' => $games]);
+        return view('dashboard.admin.games.list')->with(['games' => $games]);
     }
     public function create(Request $request)
     {
-        die($request);
-        $games = Games::orderBy('view_order')->get();
-        return view('dashboard.admin.gamesList')->with(['games' => $games]);
+
+        $game = $request->all();
+        Games::create([
+            'name' => $game['name'],
+            'active_avatar' => $game['base64_img'][0],
+            'inactive_avatar' => $game['base64_img'][1],
+        ]);
+        return $this->index();
     }
-    public function update(Request $request)
+    public function edit(Games $game)
     {
-        die($request);
-        $games = Games::orderBy('view_order')->get();
-        return view('dashboard.admin.gamesList')->with(['games' => $games]);
+        return view('dashboard.admin.games.edit')->with(['game' => $game]);
     }
-    public function delete(Request $request)
+
+    public function update(Games $game, Request $request)
     {
-        die($request);
-        $games = Games::orderBy('view_order')->get();
-        return view('dashboard.admin.gamesList')->with(['games' => $games]);
+        $temp = $request->all();
+        $data = array(
+            'name' => $temp['name'],
+            'description' => $temp['description'],
+            'view_order' => $temp['view_order']
+        );
+        if (!is_null($temp['base64_img'][0])) $data['active_avatar'] = $temp['base64_img'][0];
+        if (!is_null($temp['base64_img'][1])) $data['inactive_avatar'] = $temp['base64_img'][0];
+        $game->update($data);
+        $request->session()->flash('message', 'Game updated successfully!');
+        return $this->index();
     }
-    // public function upload(Request $request)
-    // {
-    //     $folderPath = public_path('upload/');
-
-    //     $image_parts = explode(";base64,", $request->image);
-    //     $image_type_aux = explode("image/", $image_parts[0]);
-    //     $image_type = $image_type_aux[1];
-    //     $image_base64 = base64_decode($image_parts[1]);
-    //     $file = $folderPath . uniqid() . '.png';
-
-    //     file_put_contents($file, $image_base64);
-
-    //     return response()->json(['success' => 'success']);
-    // }
+    public function delete(Games $game, Request $request)
+    {
+        $game->delete();
+        $request->session()->flash('message', 'Game deleted successfully!');
+        return $this->index();
+    }
 }

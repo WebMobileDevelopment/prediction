@@ -72,7 +72,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- {{ var_dump($user) }} --}}
                                 <button class="btn btn-block btn-success" type="submit">{{ __('Save') }}</button>
                                 <a href="{{ route('users.index') }}"
                                     class="btn btn-block btn-primary">{{ __('Return') }}</a>

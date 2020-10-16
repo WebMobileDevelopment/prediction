@@ -52,6 +52,7 @@ mix.js('resources/js/coreui/menu-edit.js', 'public/js');
 mix.js('resources/js/coreui/media.js', 'public/js');
 mix.js('resources/js/coreui/media-cropp.js', 'public/js');
 mix.copy('resources/js/cropper_script.js', 'public/js');
+mix.copy('resources/js/cropper.js', 'public/js');
 //*************** OTHER ****************** 
 //fonts
 mix.copy('node_modules/@coreui/icons/fonts', 'public/fonts');

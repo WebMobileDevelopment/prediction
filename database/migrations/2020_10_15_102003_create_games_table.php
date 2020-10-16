@@ -16,11 +16,12 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->blob('acitve_avatar')->nullable();
-            $table->blob('inacitve_avatar')->nullable();
-            $table->string('description');
+            $table->binary('active_avatar')->nullable();
+            $table->binary('inactive_avatar')->nullable();
+            $table->string('description')->nullable();
             $table->integer('view_order')->default(10000);
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

@@ -29,7 +29,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-<link rel="manifest" href="assets/favicon/manifest.json">
+<link rel="manifest" href="{{ asset('assets/favicon/manifest.json')}}">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
@@ -38,10 +38,12 @@
 <link href="{{ asset('css/flag.min.css') }}" rel="stylesheet"> <!-- icons -->
 <!-- Main styles for this application-->
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+@toastr_css
 @yield('css')
 
 @jquery
+@toastr_js
+@toastr_render
 <!-- Global site tag (gtag.js) - Google Analytics-->
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
 <script>
@@ -82,13 +84,24 @@
         </div>
     </div>
 
+    @if (Session::has('message'))
+        <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+    @endif
 
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
-    
+
     @yield('javascript')
 
 </body>
 
 </html>
+<script>
+    $(function() {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function() {
+            $(".alert").slideUp(500);
+        });
+    })
+
+</script>

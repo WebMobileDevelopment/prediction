@@ -135,10 +135,46 @@ Route::middleware('auth')->group(function () {
             Route::resource('bread',        BreadController::class); //create BREAD (resource)
             Route::resource('games',        admin\GamesController::class);
             Route::prefix('games')->group(function () {
-                Route::get('/',         'admin\GamesController@index')->name('games');
-                Route::post('/',        'admin\GamesController@index')->name('games.create');
-                Route::put('/',         'admin\GamesController@update')->name('games.update');
-                Route::delete('/',      'admin\GamesController@delete')->name('games.delete');
+                Route::get('/',             'admin\GamesController@index')->name('games');
+                Route::post('/',            'admin\GamesController@create')->name('games.create');
+                Route::get('/edit/{game}',    'admin\GamesController@edit')->name('games.edit');
+                Route::put('/{game}',         'admin\GamesController@update')->name('games.update');
+                Route::delete('/{game}',          'admin\GamesController@delete')->name('games.destroy');
+            });
+            Route::prefix('leagues')->group(function () {
+                Route::get('/',             'admin\LeaguesController@index')->name('leagues');
+                Route::post('/',            'admin\LeaguesController@create')->name('leagues.create');
+                Route::get('/edit/{league}',    'admin\LeaguesController@edit')->name('leagues.edit');
+                Route::put('/{league}',         'admin\LeaguesController@update')->name('leagues.update');
+                Route::delete('/{league}',          'admin\LeaguesController@delete')->name('leagues.destroy');
+            });
+            Route::prefix('leagueTeams')->group(function () {
+                Route::get('/',             'admin\LeagueTeamsController@index')->name('leagueTeams');
+                Route::post('/',            'admin\LeagueTeamsController@create')->name('leagueTeams.create');
+                Route::get('/edit/{leagueTeam}',    'admin\LeagueTeamsController@edit')->name('leagueTeams.edit');
+                Route::put('/{leagueTeam}',         'admin\LeagueTeamsController@update')->name('leagueTeams.update');
+                Route::delete('/{leagueTeam}',          'admin\LeagueTeamsController@delete')->name('leagueTeams.destroy');
+            });
+            Route::prefix('matchs')->group(function () {
+                Route::get('/',             'admin\MatchsController@index')->name('matchs');
+                Route::post('/',            'admin\MatchsController@create')->name('matchs.create');
+                Route::get('/edit/{match}',    'admin\MatchsController@edit')->name('matchs.edit');
+                Route::put('/{match}',         'admin\MatchsController@update')->name('matchs.update');
+                Route::delete('/{match}',          'admin\MatchsController@delete')->name('matchs.destroy');
+            });
+            Route::prefix('Teams')->group(function () {
+                Route::get('/',             'admin\TeamsController@index')->name('teams');
+                Route::post('/',            'admin\TeamsController@create')->name('teams.create');
+                Route::get('/edit/{team}',    'admin\TeamsController@edit')->name('teams.edit');
+                Route::put('/{team}',         'admin\TeamsController@update')->name('teams.update');
+                Route::delete('/{team}',          'admin\TeamsController@delete')->name('teams.destroy');
+            });
+            Route::prefix('players')->group(function () {
+                Route::get('/',             'admin\PlayersController@index')->name('players');
+                Route::post('/',            'admin\PlayersController@create')->name('players.create');
+                Route::get('/edit/{player}',    'admin\PlayersController@edit')->name('players.edit');
+                Route::put('/{player}',         'admin\PlayersController@update')->name('players.update');
+                Route::delete('/{player}',          'admin\PlayersController@delete')->name('players.destroy');
             });
             Route::resource('users',        UsersController::class)->except(['create', 'store']);
             Route::resource('roles',        'RolesController');

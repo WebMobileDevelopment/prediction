@@ -33,6 +33,16 @@
         max-width: 1000px !important;
     }
 
+    .img-container {
+        /* Never limit the container height here */
+        max-width: 100%;
+    }
+
+    .img-container img {
+        /* This is important */
+        width: 100%;
+    }
+
 </style>
 
 <body>

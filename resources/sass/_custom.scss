@@ -14,3 +14,10 @@
 .form-control {
     color: #5e5e5e;
 }
+
+.alert {
+    position: fixed;
+    z-index: 10000;
+    right: 10px;
+    top: 10px;
+}

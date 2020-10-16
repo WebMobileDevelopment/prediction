@@ -6,27 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
-class Games extends Model
+class Leagues extends Model
 {
 
     use HasFactory;
 
-    protected $table = 'games';
-/**
+    protected $table = 'leagues';
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'view_order','active_avatar', 'inactive_avatar',
+        'game_id', 'name','avatar', 'description','location','start_time','end_time'
     ];
     /**
      * Get the User that owns the Notes.
      */
-    // public function user()
-    // {
-    //     return $this->belongsTo('App\Models\User', 'users_id')->withTrashed();
-    // }
+    public function game()
+    {
+        return $this->belongsTo('App\Models\Games', 'game_id')->withTrashed();
+    }
 
     /**
      * Get the Status that owns the Notes.
