@@ -1,20 +1,6 @@
-/dist
 /node_modules
-/database/database.sqlite
 /public/hot
 /public/storage
-/public/js
-/public/css
-/public/img
-/public/flags
-/public/fonts
-/public/webfonts
-/public/scss
-/public/assets
-/public/svg
-/public/icons
-/public/vendors
-/public/public
 /storage/*.key
 /vendor
 .env
@@ -24,8 +10,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-composer.phar
 package-lock.json
 composer.lock
 phpunit.xml.bak
+composer.phar
+
+/database/database.sqlite
 
