@@ -18,21 +18,29 @@ class Leagues extends Model
      * @var array
      */
     protected $fillable = [
-        'game_id', 'name','avatar', 'description','location','start_time','end_time'
+        'game_id', 'name', 'avatar', 'description', 'location', 'start_time', 'end_time'
     ];
+    protected $with = ['teams', 'matchs'];
     /**
-     * Get the User that owns the Notes.
+     * Get the Game that owns the league.
      */
     public function game()
     {
-        return $this->belongsTo('App\Models\Games', 'game_id')->withTrashed();
+        return $this->belongsTo('App\Models\Games', 'game_id');
     }
 
     /**
-     * Get the Status that owns the Notes.
+     * Get the Teams that contained to League.
      */
-    // public function status()
-    // {
-    //     return $this->belongsTo('App\Models\Status', 'status_id');
-    // }
+    public function teams()
+    {
+        return $this->hasMany('App\Models\LeagueTeams', 'league_id', 'id');
+    }
+    /**
+     * Get the Teams that contained to League.
+     */
+    public function matchs()
+    {
+        return $this->hasMany('App\Models\Matchs', 'league_id', 'id');
+    }
 }

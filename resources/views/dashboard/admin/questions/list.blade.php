@@ -9,10 +9,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>All Teams in {{ $league->name }} League
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_team">Add team</button>
-                            <a class="btn btn-primary btn-sm btn-pill float-right mr-3" href="{{ route('leagues') }}">Select
-                                League</a>
+                            <i class="fa fa-align-justify"></i>All Qustions in {{ $match->name }} Match
+                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_question">Add
+                                question</button>
+                            <a class="btn btn-primary btn-sm btn-pill float-right mr-3"
+                                href="{{ route('matchs', $match->league_id) }}">Select Match</a>
                         </div>
 
                         <div class="card-body">
@@ -22,32 +23,39 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Name</th>
-                                        <th class="text-center">Country</th>
-                                        <th class="text-center">Location</th>
-                                        <th class="text-center">Avatar</th>
-                                        <th class="text-center">Description</th>
+                                        <th class="text-center">Team1</th>
+                                        <th class="text-center">Team2</th>
+                                        <th class="text-center">Question</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($league->teams as $team)
+                                    @foreach ($match->questions as $question)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $team->team->name }}</td>
-                                            <td class="text-center">{{ $team->team->country }}</td>
-                                            <td class="text-center">{{ $team->team->location }}</td>
-                                            <td class="text-center">
+                                            <td class="text-center">{{ $match->team1->name }}
                                                 <div class="c-avatar">
-                                                    <img src="{{ $team->team->avatar }}" alt="Top menu active icon"
-                                                        width="40px" height="40px">
+                                                    <img src="{{ $match->team1->avatar }}" alt="Team1 Avatar" width="40px"
+                                                        height="40px">
                                                 </div>
                                             </td>
-                                            <td class="text-center">{{ $team->team->description }}</td>
+                                            <td class="text-center">{{ $match->team2->name }}
+                                                <div class="c-avatar">
+                                                    <img src="{{ $match->team2->avatar }}" alt="Team2 Avatar" width="40px"
+                                                        height="40px">
+                                                </div>
+                                            </td>
                                             <td class="text-center">
-                                                <form
-                                                    action="{{ route('leagueTeams.destroy', ['league_id' => $league->id, 'leagueTeam' => $team->id]) }}"
-                                                    method="POST" class="delete-form mb-0">
+                                                {{ $question->question }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ url('/questions/edit/' . $question->id) }}"
+                                                    class="btn btn-block btn-primary">Edit</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <form action="{{ route('questions.destroy', $question->id) }}" method="POST"
+                                                    class="delete-form mb-0">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button class="btn btn-block btn-danger">Delete</button>
@@ -66,30 +74,26 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('leagueTeams.create', $league->id) }}" id="add_form">
+            <form method="POST" action="{{ route('questions.create', $match->id) }}" id="add_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add new team</h4>
+                        <h4 class="modal-title">Add new question</h4>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Game Type</label>
+                            <label class="col-md-3 col-form-label" for="password-input">Question String</label>
                             <div class="col-md-9">
-                                <select class="form-control" id="team-name" name="team_id" value="{{ old('team_id') }}">
-                                    @foreach ($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input class="form-control" type="text" placeholder="question Name" name="question"
+                                    id="question" value="{{ old('question') }}" autofocus>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" id="add_button">Add Team</button>
+                        <button class="btn btn-primary" type="button" id="add_button">Add Question</button>
                     </div>
                 </div>
             </form>
@@ -104,23 +108,22 @@
 
             toastr.options.timeOut = 1000;
             toastr.options.extendedTimeOut = 0;
-
             $(".delete-form").submit(function() {
-                var confirm = prompt("Please enter 'yes' if you are going to delete this team.");
+                var confirm = prompt("Please enter 'yes' if you are going to delete this question.");
                 if (confirm === 'yes') {
                     return true;
                 } else {
                     return false; // will halt submission
                 }
             })
-            $("#add_team").click(function() {
+            $("#add_question").click(function() {
                 $("#myModal").modal('show');
             });
             $("#add_button").click(function() {
-                if (!$("#team-name").val()) {
-                    toastr.error('Please select team name', 'error!');
+                if (!$("#question").val()) {
+                    toastr.error('Please input question', 'error!');
                     return false;
-                }
+                }               
                 $("#add_form").submit();
             })
         });

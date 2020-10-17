@@ -149,20 +149,25 @@ Route::middleware('auth')->group(function () {
                 Route::delete('/{league}',          'admin\LeaguesController@delete')->name('leagues.destroy');
             });
             Route::prefix('leagueTeams')->group(function () {
-                Route::get('/',             'admin\LeagueTeamsController@index')->name('leagueTeams');
-                Route::post('/',            'admin\LeagueTeamsController@create')->name('leagueTeams.create');
-                Route::get('/edit/{leagueTeam}',    'admin\LeagueTeamsController@edit')->name('leagueTeams.edit');
-                Route::put('/{leagueTeam}',         'admin\LeagueTeamsController@update')->name('leagueTeams.update');
-                Route::delete('/{leagueTeam}',          'admin\LeagueTeamsController@delete')->name('leagueTeams.destroy');
+                Route::get('/{league_id}',             'admin\LeagueTeamsController@index')->name('leagueTeams');
+                Route::post('/{league_id}',            'admin\LeagueTeamsController@create')->name('leagueTeams.create');
+                Route::delete('/{league_id}/{leagueTeam}',          'admin\LeagueTeamsController@delete')->name('leagueTeams.destroy');
             });
             Route::prefix('matchs')->group(function () {
-                Route::get('/',             'admin\MatchsController@index')->name('matchs');
-                Route::post('/',            'admin\MatchsController@create')->name('matchs.create');
+                Route::get('/{league_id}',             'admin\MatchsController@index')->name('matchs');
+                Route::post('/{league_id}',            'admin\MatchsController@create')->name('matchs.create');
                 Route::get('/edit/{match}',    'admin\MatchsController@edit')->name('matchs.edit');
                 Route::put('/{match}',         'admin\MatchsController@update')->name('matchs.update');
                 Route::delete('/{match}',          'admin\MatchsController@delete')->name('matchs.destroy');
             });
-            Route::prefix('Teams')->group(function () {
+            Route::prefix('questions')->group(function () {
+                Route::get('/{match_id}',             'admin\QuestionsController@index')->name('questions');
+                Route::post('/{match_id}',            'admin\QuestionsController@create')->name('questions.create');
+                Route::get('/edit/{question}',    'admin\QuestionsController@edit')->name('questions.edit');
+                Route::put('/{question}',         'admin\QuestionsController@update')->name('questions.update');
+                Route::delete('/{question}',          'admin\QuestionsController@delete')->name('questions.destroy');
+            });
+            Route::prefix('teams')->group(function () {
                 Route::get('/',             'admin\TeamsController@index')->name('teams');
                 Route::post('/',            'admin\TeamsController@create')->name('teams.create');
                 Route::get('/edit/{team}',    'admin\TeamsController@edit')->name('teams.edit');

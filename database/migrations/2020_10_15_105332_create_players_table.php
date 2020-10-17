@@ -20,7 +20,7 @@ class CreatePlayersTable extends Migration
             $table->string('country')->nullable();
             $table->string('nationality')->nullable();
             $table->integer('age')->nullable();
-            $table->binary('photo')->nullable();
+            $table->binary('avatar')->nullable();
             $table->string('description')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

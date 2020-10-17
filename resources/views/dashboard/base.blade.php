@@ -29,11 +29,16 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-<link rel="manifest" href="{{ asset('assets/favicon/manifest.json')}}">
+<link rel="manifest" href="{{ asset('assets/favicon/manifest.json') }}">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
+
 <!-- Icons-->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="{{ asset('/libs/datetimepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"
+    integrity="sha256-jKV9n9bkk/CTP8zbtEtnKaKf+ehRovOYeKoyfthwbC8=" crossorigin="anonymous" />
 <link href="{{ asset('css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
 <link href="{{ asset('css/flag.min.css') }}" rel="stylesheet"> <!-- icons -->
 <!-- Main styles for this application-->
@@ -91,9 +96,11 @@
     <!-- CoreUI and necessary plugins-->
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+    <script src="{{asset('/libs/datetimepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('/libs/datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
     @yield('javascript')
-
 </body>
 
 </html>

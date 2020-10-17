@@ -5,23 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Players extends Model
+class Questions extends Model
 {
     use HasFactory;
-    protected $table = 'players';
+    protected $table = 'questions';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'team_id', 'name','country','nationality', 'age','avatar','description'
+        'match_id', 'question'
     ];
     /**
-     * Get the Team type that owns the player.
+     * Get the match that owns the question.
      */
-    public function team()
+    public function match()
     {
-        return $this->belongsTo('App\Models\Teams', 'team_id');
+        return $this->belongsTo('App\Models\Match', 'match_id');
     }
 }

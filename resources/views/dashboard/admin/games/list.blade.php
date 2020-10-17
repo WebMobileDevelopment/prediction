@@ -101,7 +101,7 @@
                                     </svg>
                                 </span>
                             </div>
-                            <input class="form-control" type="" placeholder="Description" name="description"
+                            <input class="form-control" type="text" placeholder="Description" name="description"
                                 value="{{ old('description') }}">
                         </div>
                         <div class="input-group mb-3">

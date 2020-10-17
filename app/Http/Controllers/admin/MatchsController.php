@@ -3,50 +3,49 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Games;
+use App\Models\Leagues;
+use App\Models\Teams;
+use App\Models\LeagueTeams;
 use App\Models\Matchs;
 use Illuminate\Http\Request;
+use Carbon;
 
 class MatchsController extends Controller
 {
-    public function index()
+    public function index($league_id)
     {
-        $matchs = Matchs::orderBy('view_order')->get();
-        return view('dashboard.admin.matchs.list')->with(['matchs' => $matchs]);
-    }
-    public function create(Request $request)
-    {
-
-        $match = $request->all();
-        Matchs::create([
-            'name' => $match['name'],
-            'active_avatar' => $match['base64_img'][0],
-            'inactive_avatar' => $match['base64_img'][1],
-        ]);
-        return $this->index();
-    }
-    public function edit(Matchs $match)
-    {
-        return view('dashboard.admin.matchs.edit')->with(['match' => $match]);
+        $league = Leagues::find($league_id);
+        $data['league'] = $league;
+        $data['league_teams'] = LeagueTeams::where('league_id', $league->id)->orderBy('team_id')->get();
+        return view('dashboard.admin.matchs.list')->with($data);
     }
 
-    public function update(Matchs $match, Request $request)
+    public function create($league_id, Request $request)
     {
         $temp = $request->all();
         $data = array(
             'name' => $temp['name'],
+            'league_id' => $league_id,
+            'team1_id' => $temp['team1_id'],
+            'team2_id' => $temp['team2_id'],
             'description' => $temp['description'],
-            'view_order' => $temp['view_order']
+            'start_time' => Carbon::create($temp['start_time']),
+            'end_time' => Carbon::create($temp['end_time']),
         );
-        if (!is_null($temp['base64_img'][0])) $data['active_avatar'] = $temp['base64_img'][0];
-        if (!is_null($temp['base64_img'][1])) $data['inactive_avatar'] = $temp['base64_img'][0];
-        $match->update($data);
-        $request->session()->flash('message', 'match updated successfully!');
-        return $this->index();
+
+        if (!is_null($temp['start_time'])) {
+            $data['start_time'] = Carbon::create($temp['start_time']);
+            $data['end_time'] = Carbon::create($temp['end_time']);
+        }
+        Matchs::create($data);
+        return $this->index($league_id);
     }
-    public function delete(Matchs $match, Request $request)
+
+    public function delete($league_id, Matchs $match, Request $request)
     {
         $match->delete();
-        $request->session()->flash('message', 'match deleted successfully!');
-        return $this->index();
+        $request->session()->flash('message', 'Match deleted successfully!');
+        return $this->index($league_id);
     }
 }

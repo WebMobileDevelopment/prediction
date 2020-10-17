@@ -3,50 +3,37 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LeagueTeams;
+use App\Models\Games;
+use App\Models\Leagues;
+use App\Models\Teams;
+use App\Models\leagueTeams;
 use Illuminate\Http\Request;
+use Carbon;
 
 class LeagueTeamsController extends Controller
 {
-    public function index()
+    public function index($league_id)
     {
-        $leagueTeams = LeagueTeams::orderBy('view_order')->get();
-        return view('dashboard.admin.leagueTeams.list')->with(['leagueTeams' => $leagueTeams]);
-    }
-    public function create(Request $request)
-    {
-
-        $leagueTeam = $request->all();
-        LeagueTeams::create([
-            'name' => $leagueTeam['name'],
-            'active_avatar' => $leagueTeam['base64_img'][0],
-            'inactive_avatar' => $leagueTeam['base64_img'][1],
-        ]);
-        return $this->index();
-    }
-    public function edit(LeagueTeams $leagueTeam)
-    {
-        return view('dashboard.admin.leagueTeams.edit')->with(['leagueTeam' => $leagueTeam]);
+        $league = Leagues::find($league_id);
+        $data['league'] = $league;
+        $data['teams'] = Teams::where('game_id', $league->game_id)->orderBy('name')->get();
+        return view('dashboard.admin.leagueTeams.list')->with($data);
     }
 
-    public function update(LeagueTeams $leagueTeam, Request $request)
+    public function create($league_id, Request $request)
     {
         $temp = $request->all();
-        $data = array(
-            'name' => $temp['name'],
-            'description' => $temp['description'],
-            'view_order' => $temp['view_order']
-        );
-        if (!is_null($temp['base64_img'][0])) $data['active_avatar'] = $temp['base64_img'][0];
-        if (!is_null($temp['base64_img'][1])) $data['inactive_avatar'] = $temp['base64_img'][0];
-        $leagueTeam->update($data);
-        $request->session()->flash('message', 'leagueTeam updated successfully!');
-        return $this->index();
+        leagueTeams::create([
+            'league_id' => $league_id,
+            'team_id' => $temp['team_id'],
+        ]);
+        return $this->index($league_id);
     }
-    public function delete(LeagueTeams $leagueTeam, Request $request)
+
+    public function delete($league_id, leagueTeams $leagueTeam, Request $request)
     {
         $leagueTeam->delete();
-        $request->session()->flash('message', 'leagueTeam deleted successfully!');
-        return $this->index();
+        $request->session()->flash('message', 'LeagueTeam deleted successfully!');
+        return $this->index($league_id);
     }
 }

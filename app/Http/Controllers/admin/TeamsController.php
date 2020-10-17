@@ -3,30 +3,38 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\teams;
+use App\Models\Games;
+use App\Models\Teams;
 use Illuminate\Http\Request;
+use Carbon;
 
 class TeamsController extends Controller
 {
     public function index()
     {
-        $teams = teams::orderBy('view_order')->get();
-        return view('dashboard.admin.teams.list')->with(['teams' => $teams]);
+        $data['games'] = Games::orderBy('view_order')->get();
+        $data['teams'] = Teams::orderBy('game_id')->orderBy('name')->get();
+        return view('dashboard.admin.teams.list')->with($data);
     }
     public function create(Request $request)
     {
 
         $team = $request->all();
-        teams::create([
+        Teams::create([
             'name' => $team['name'],
-            'active_avatar' => $team['base64_img'][0],
-            'inactive_avatar' => $team['base64_img'][1],
+            'game_id' => $team['game_id'],
+            'country' => $team['country'],
+            'location' => $team['location'],
+            'description' => $team['description'],
+            'avatar' => $team['base64_img'][0],
         ]);
         return $this->index();
     }
     public function edit(Teams $team)
     {
-        return view('dashboard.admin.teams.edit')->with(['team' => $team]);
+        $data['team'] = $team;
+        $data['games'] = Games::orderBy('view_order')->get();
+        return view('dashboard.admin.teams.edit')->with($data);
     }
 
     public function update(Teams $team, Request $request)
@@ -34,11 +42,12 @@ class TeamsController extends Controller
         $temp = $request->all();
         $data = array(
             'name' => $temp['name'],
+            'game_id' => $temp['game_id'],
+            'country' => $temp['country'],
+            'location' => $temp['location'],
             'description' => $temp['description'],
-            'view_order' => $temp['view_order']
         );
-        if (!is_null($temp['base64_img'][0])) $data['active_avatar'] = $temp['base64_img'][0];
-        if (!is_null($temp['base64_img'][1])) $data['inactive_avatar'] = $temp['base64_img'][0];
+        if (!is_null($temp['base64_img'][0])) $data['avatar'] = $temp['base64_img'][0];
         $team->update($data);
         $request->session()->flash('message', 'team updated successfully!');
         return $this->index();

@@ -15,6 +15,14 @@ class Teams extends Model
      * @var array
      */
     protected $fillable = [
-        'game_id', 'country','location', 'avatar','description'
+        'name', 'game_id', 'country', 'location', 'avatar', 'description'
     ];
+
+    /**
+     * Get the Game type that owns the team.
+     */
+    public function game()
+    {
+        return $this->belongsTo('App\Models\Games', 'game_id');
+    }
 }
