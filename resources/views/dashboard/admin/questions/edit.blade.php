@@ -11,7 +11,6 @@
         #update_form .text-center img {
             width: 100px;
         }
-
     </style>
     <div class="container-fluid">
         <div class="animated fadeIn">

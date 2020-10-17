@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use App\Models\User;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Stevebauman\Location\Facades\Location;
@@ -17,6 +18,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+       
     }
 
     /**
@@ -26,6 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $userRoles = Auth::user()->menuroles;
+        // if ($userRoles !== 'user,admin')
+        //     return redirect()->route('user.home');
+
+            
         $tommorrow = Carbon::tomorrow();
         $weeks_ago = Carbon::tomorrow()->subDays(7);
         $week_days = array();
