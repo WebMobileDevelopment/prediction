@@ -1,5 +1,5 @@
 {
-    "/render/js/app.js": "/render/js/app.js?id=4dfbe3ca5b1fc70d272f",
+    "/render/js/app.js": "/render/js/app.js?id=4cebde2eb48b213f5c5d",
     "/render/css/app.css": "/render/css/app.css?id=513da3635d203b3001ad",
     "/render/css/frontend.css": "/render/css/frontend.css?id=2697a36fe2b495087eb5",
     "/render/css/auth.css": "/render/css/auth.css?id=cde7e8d4b21cd9e5f0ee",
@@ -13,6 +13,5 @@
     "/render/js/coreui-utils.js": "/render/js/coreui-utils.js?id=d2b193e4d4dc7c5ec9a3",
     "/render/js/coreui.bundle.min.js": "/render/js/coreui.bundle.min.js?id=94b5d8a56feb015c0a1b",
     "/render/js/coreui-chartjs.bundle.js": "/render/js/coreui-chartjs.bundle.js?id=688f0fbd215619f7d896",
-    "/render/js/Chart.min.js": "/render/js/Chart.min.js?id=b5c2301eb15826bf38c9",
-    "/render/js/cropper.js": "/render/js/cropper.js?id=33686b9c77483fd8872b"
+    "/render/js/Chart.min.js": "/render/js/Chart.min.js?id=b5c2301eb15826bf38c9"
 }
