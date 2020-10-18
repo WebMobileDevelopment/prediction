@@ -1,0 +1,43 @@
+#show_image,
+#preview_img {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+}
+
+#preview_img {
+    overflow: hidden;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
+
+#crop_modal .modal-lg {
+    max-width: 1000px !important;
+}
+
+.img-container {
+    max-width: 100%;
+}
+
+.img-container img {
+    width: 100%;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.preview {
+    overflow: hidden;
+    width: 160px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid red;
+}
+
+.modal-lg {
+    max-width: 1000px !important;
+}
