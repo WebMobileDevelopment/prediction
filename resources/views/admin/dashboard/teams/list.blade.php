@@ -98,8 +98,8 @@
                                 id="team_name" value="{{ old('name') }}" autofocus>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Country</label>
-                            <input class="form-control col-md-9" type="text" placeholder="country" name="short_name"
+                            <label class="col-md-3 col-form-label" for="password-input">Short Name</label>
+                            <input class="form-control col-md-9" type="text" placeholder="Short Name" name="short_name"
                                 id="short_name" value="{{ old('short_name') }}">
                         </div>
                         <div class="form-group row">

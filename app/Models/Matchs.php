@@ -18,7 +18,7 @@ class Matchs extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'league_id', 'team1_id', 'team2_id', 'description', 'start_time', 'end_time'
+        'name', 'league_id', 'team1_id', 'team2_id', 'description', 'answered', 'total_prize', 'start_time', 'end_time'
     ];
     protected $with = ['team1', 'team2', 'questions'];
     /**

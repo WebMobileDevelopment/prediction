@@ -5,10 +5,10 @@
         <div class="d-flex top-footer justify-content-between align-items-center">
             <div class="left">
                 <div class="btn-1">
-                    Cash
+                    White
                 </div>
                 <div class="btn-2">
-                    Fun
+                    Black
                 </div>
             </div>
             <div class="right">
@@ -26,38 +26,37 @@
         <!-- footer menu -->
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link foo-sec-item f-active" href="index.html">
-                    <img class="sec-foo f-active" src="{{ asset('assets/images/front/footer-icons/Home.png') }}" />
+                <a class="nav-link foo-sec-item f-active" href="{{ route('user.home', $game_id) }}">
+                    <img class="sec-foo f-active" src="{{ asset('assets/images/footer-buttons/Home.png') }}" />
                     <span>Home</span>
                 </a>
             </li>
             <li class="nav-item px-35 foo-border">
                 <a class="nav-link foo-border-right foo-sec-item" href="#">
-                    <img class="sec-foo" src="{{ asset('assets/images/front/footer-centre-menu-icons/Winners.png') }}" />
+                    <img class="sec-foo" src="{{ asset('assets/images/footer-buttons/Winner.png') }}" />
                     <span>Winner</span>
                 </a>
             </li>
             <li class="nav-item foo-cen-bor-ra">
-                <a class="nav-link footer-centre-menu-icons" href="#" id="menu-btn" onclick="pop()">
-                    <img src="{{ asset('assets/images/front/footer-centre-menu-icons/Footer-menu-centre.png') }}" />
+                <a class="nav-link footer-centre-menu-icons menu-btn" href="#">
+                    <img src="{{ asset('assets/images/footer-buttons/Center.png') }}" />
                     <span>Menu</span>
                 </a>
             </li>
             <li class="nav-item px-35 foo-border">
                 <a class="nav-link foo-border-left foo-sec-item" href="#">
-                    <img class="sec-foo" src="{{ asset('assets/images/front/footer-icons/Rewards.png') }}" />
+                    <img class="sec-foo" src="{{ asset('assets/images/footer-buttons/Reward.png') }}" />
                     <span>Reward</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link foo-sec-item" href="#">
-                    <img class="sec-foo" src="{{ asset('assets/images/front/footer-icons/faq-circular-filled-button.png') }}" />
+                <a class="nav-link foo-sec-item" href="{{route('user.faq')}}">
+                    <img class="sec-foo" src="{{ asset('assets/images/footer-buttons/Faq.png') }}" />
                     <span>FAQ</span>
+
                 </a>
-            </li>
-            <li class="nav-item">
-                <form action="{{ route('logout') }}" method="POST"> @csrf <button type="submit"
-                    class="btn btn-ghost-dark btn-block">Logout</button></form>
+               
+               
             </li>
         </ul>
         <!-- footer menu -->

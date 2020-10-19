@@ -20,30 +20,28 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Country</th>
-                                        <th class="text-center">Location</th>
+                                        <th class="text-center">Short Name</th>
                                         <th class="text-center">Avatar</th>
                                         <th class="text-center">Description</th>
-                                        <th></th>
+                                        <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($league->teams as $team)
+                                    @foreach ($league->teams as $league_team)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">{{ $team->team->name }}</td>
-                                            <td class="text-center">{{ $team->team->country }}</td>
-                                            <td class="text-center">{{ $team->team->location }}</td>
+                                            <td class="text-center">{{ $league_team->team->name }}</td>
+                                            <td class="text-center">{{ $league_team->team->short_name }}</td>
                                             <td class="text-center">
                                                 <div class="c-avatar">
-                                                    <img src="{{ $team->team->avatar }}" alt="Top menu active icon"
+                                                    <img src="{{ $league_team->team->avatar }}" alt="Team Avatar"
                                                         width="40px" height="40px">
                                                 </div>
                                             </td>
-                                            <td class="text-center">{{ $team->team->description }}</td>
+                                            <td class="text-center">{{ $league_team->team->description }}</td>
                                             <td class="text-center">
                                                 <form
-                                                    action="{{ route('leagueTeams.destroy', ['league_id' => $league->id, 'leagueTeam' => $team->id]) }}"
+                                                    action="{{ route('leagueTeams.destroy', ['league_id' => $league->id, 'leagueTeam' => $league_team->id]) }}"
                                                     method="POST" class="delete-form mb-0">
                                                     @method('DELETE')
                                                     @csrf

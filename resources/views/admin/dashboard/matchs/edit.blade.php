@@ -6,7 +6,7 @@
             width: 100px;
         }
 
-        #update_form .text-center img {
+        #prev_img {
             width: 100px;
         }
 
@@ -17,79 +17,70 @@
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Edit {{ $game->name }}</div>
+                            <i class="fa fa-align-justify"></i> Edit {{ $match->name }}
+                        </div>
                         <div class="card-body">
                             <br>
-                            <form method="POST" action="{{ route('games.update', $game->id) }}" id="update_form">
+                            <form method="POST" action="{{ route('matchs.update', $match->id) }}" id="submit_form">
                                 @csrf
                                 @method('PUT')
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Name</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="Name" name="name" id="game-name"
-                                        value="{{ $game->name }}" autofocus>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">View order</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="View order" name="view_order"
-                                        value="{{ $game->view_order }}">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Description</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="Description" name="description"
-                                        value="{{ $game->description }}">
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        Active avatar
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row text-center">
-                                            <div class="col-md-6">Origin</div>
-                                            <div class="col-md-6">New</div>
-                                        </div>
-                                        <div class="row text-center">
-                                            <div class="col-md-6"><img src="{{ $game->active_avatar }}"></div>
-                                            <div class="col-md-6">
-                                                <div class="img_container" id="active-avatar">
-                                                    @include('element.cropper.content')
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">Team1</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="team1_name" name="team1_id">
+                                            @foreach ($league_teams as $league_team)
+                                                <option value="{{ $league_team->team_id }}"
+                                                    {{ $match->team1_id == $league_team->team_id ? 'selected' : '' }}>
+                                                    {{ $league_team->team->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-
-                                <div class="row mb-5">
-                                    <div class="col-md-4">
-                                        Inactive avatar
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row text-center">
-                                            <div class="col-md-6">Origin</div>
-                                            <div class="col-md-6">New</div>
-                                        </div>
-                                        <div class="row text-center">
-                                            <div class="col-md-6"><img src="{{ $game->inactive_avatar }}"></div>
-                                            <div class="col-md-6">
-                                                <div class="img_container" id="inactive-avatar">
-                                                    @include('element.cropper.content')
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">Team2</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control" id="team2_name" name="team2_id">
+                                            @foreach ($league_teams as $league_team)
+                                                <option value="{{ $league_team->team_id }}"
+                                                    {{ $match->team2_id == $league_team->team_id ? 'selected' : '' }}>
+                                                    {{ $league_team->team->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-
-                                @include('element.cropper.footer')
-
-
-                                <button class="btn btn-block btn-success" id="save_button">Save</button>
-                                <a href="{{ route('games') }}" class="btn btn-block btn-primary">Return</a>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">Name</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" placeholder="Match Name" name="name"
+                                            id="match_name" value="{{ $match->name }}" autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">Description</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control" type="text" placeholder="Match Description"
+                                            name="description" value="{{ $match->description }}" autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">Start time</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control datetimepicker" name="start_time"
+                                            id="start_time" value="{{ $match->start_time }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="password-input">End time</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control datetimepicker" name="end_time" id="end_time"
+                                            value="{{ $match->end_time }}">
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-success" id="submit_button">Save</button>
+                                <a href="{{ route('matchs', $match->league_id) }}"
+                                    class="btn btn-block btn-primary">Return</a>
                             </form>
                         </div>
                     </div>
@@ -103,12 +94,47 @@
 @section('javascript')
     <script>
         $(function() {
-            $("#save_button").click(function() {
-                if (!$("#game-name").val()) {
-                    toastr.error('Please enter game name', 'error!');
+            $('.datetimepicker').datetimepicker({
+                // Formats
+                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
+                format: 'DD-MM-YYYY hh:mm A',
+
+                // Your Icons
+                // as Bootstrap 4 is not using Glyphicons anymore
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+            $("#submit_button").click(function() {
+                if (!$("#match_name").val()) {
+                    toastr.error('Please input match name', 'error!');
                     return false;
                 }
-                $("#update_form").submit();
+                if (!$("#team1_name").val()) {
+                    toastr.error('Please select team1', 'error!');
+                    return false;
+                }
+                if (!$("#team2_name").val()) {
+                    toastr.error('Please select team2', 'error!');
+                    return false;
+                }
+                if (!$("#start_time").val()) {
+                    toastr.error('Please select start time', 'error!');
+                    return false;
+                }
+                if (!$("#end_time").val()) {
+                    toastr.error('Please select end time', 'error!');
+                    return false;
+                }
+                $("#submit_form").submit();
             })
         });
 

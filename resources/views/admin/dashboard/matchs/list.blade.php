@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>All Matchs in {{ $league->name }} League
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_match">Add
+                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_button">Add
                                 match</button>
                             <a class="btn btn-primary btn-sm btn-pill float-right mr-3" href="{{ route('leagues') }}">Select
                                 League</a>
@@ -28,8 +28,8 @@
                                         <th class="text-center">Start time</th>
                                         <th class="text-center">End time</th>
                                         <th class="text-center">Questions</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="text-center">Edit</th>
+                                        <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,7 +47,7 @@
                                             <td class="text-center">
                                                 {{ $match->team2->name }}
                                                 <div class="c-avatar">
-                                                    <img src="{{ $match->team1->avatar }}" alt="Top menu active icon"
+                                                    <img src="{{ $match->team2->avatar }}" alt="Top menu active icon"
                                                         width="40px" height="40px">
                                                 </div>
                                             </td>
@@ -58,6 +58,10 @@
                                                 <a href="{{ route('questions', $match->id) }}"
                                                     class="btn btn-block btn-success">{{ count($match->questions) }} &emsp;
                                                     Questions</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('matchs.edit', $match->id) }}"
+                                                    class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td class="text-center">
                                                 <form action="{{ route('matchs.destroy', $match->id) }}" method="POST"
@@ -80,7 +84,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('matchs.create', $league->id) }}" id="add_form">
+            <form method="POST" action="{{ route('matchs.create', $league->id) }}" id="submit_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -89,20 +93,16 @@
                                 aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Name</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Match Name" name="name" id="match-name"
-                                    value="{{ old('name') }}" autofocus>
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Team1</label>
                             <div class="col-md-9">
-                                <select class="form-control" id="team1-name" name="team1_id" value="{{ old('team1_id') }}">
+                                <select class="form-control" id="team1_name" name="team1_id">
                                     @foreach ($league_teams as $league_team)
-                                        <option value="{{ $league_team->team_id }}">{{ $league_team->team->name }}</option>
+                                        <option value="{{ $league_team->team_id }}"
+                                            {{ !is_null(old('team1_id')) && old('team1_id') == $league_team->team_id ? 'selected' : '' }}>
+                                            {{ $league_team->team->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -110,11 +110,21 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Team2</label>
                             <div class="col-md-9">
-                                <select class="form-control" id="team2-name" name="team2_id" value="{{ old('team2_id') }}">
+                                <select class="form-control" id="team2_name" name="team2_id">
                                     @foreach ($league_teams as $league_team)
-                                        <option value="{{ $league_team->team_id }}">{{ $league_team->team->name }}</option>
+                                        <option value="{{ $league_team->team_id }}"
+                                            {{ !is_null(old('team2_id')) && old('team2_id') == $league_team->team_id ? 'selected' : '' }}>
+                                            {{ $league_team->team->name }}
+                                        </option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="password-input">Name</label>
+                            <div class="col-md-9">
+                                <input class="form-control" type="text" placeholder="Match Name" name="name" id="match_name"
+                                    value="{{ old('name') }}" autofocus>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -142,7 +152,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" id="add_button">Add Match</button>
+                        <button class="btn btn-primary" type="button" id="submit_button">Add Match</button>
                     </div>
                 </div>
             </form>
@@ -153,6 +163,25 @@
 @section('javascript')
     <script>
         $(function() {
+            $('.datetimepicker').datetimepicker({
+                // Formats
+                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
+                format: 'DD-MM-YYYY hh:mm A',
+
+                // Your Icons
+                // as Bootstrap 4 is not using Glyphicons anymore
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-check',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
             $(".delete-form").submit(function() {
                 var confirm = prompt("Please enter 'yes' if you are going to delete this match.");
                 if (confirm === 'yes') {
@@ -161,19 +190,19 @@
                     return false; // will halt submission
                 }
             })
-            $("#add_match").click(function() {
+            $("#add_button").click(function() {
                 $("#myModal").modal('show');
             });
-            $("#add_button").click(function() {
-                if (!$("#match-name").val()) {
+            $("#submit_button").click(function() {
+                if (!$("#match_name").val()) {
                     toastr.error('Please input match name', 'error!');
                     return false;
                 }
-                if (!$("#team1-name").val()) {
+                if (!$("#team1_name").val()) {
                     toastr.error('Please select team1', 'error!');
                     return false;
                 }
-                if (!$("#team2-name").val()) {
+                if (!$("#team2_name").val()) {
                     toastr.error('Please select team2', 'error!');
                     return false;
                 }
@@ -185,7 +214,7 @@
                     toastr.error('Please select end time', 'error!');
                     return false;
                 }
-                $("#add_form").submit();
+                $("#submit_form").submit();
             })
         });
 

@@ -8,49 +8,63 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>All Qustions in {{ $match->name }} Match
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_question">Add
-                                question</button>
+                            <i class="fa fa-align-justify"></i>All Answers in {{ $question->name }} Question
                             <a class="btn btn-primary btn-sm btn-pill float-right mr-3"
-                                href="{{ route('matchs', $match->league_id) }}">Select Match</a>
+                                href="{{ route('questions', $question->match_id) }}">Select question</a>
                         </div>
 
                         <div class="card-body">
                             <br>
-                            <div class="row mb-5">
-                                <div class="col-md-6 c-avatar">{{ $match->team1->name }}
-                                    <img src="{{ $match->team1->avatar }}" alt="Team1 Avatar" width="40px" height="40px" class="ml-5">
-                                </div>
-                                <div class="col-md-6  c-avatar">{{ $match->team2->name }}
-                                    <img src="{{ $match->team2->avatar }}" alt="Team2 Avatar" width="40px" height="40px" class="ml-5">
-                                </div>
-                            </div>
                             <table class="table table-responsive-sm table-striped datatable table-hover table-outline mb-0">
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">Question</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="text-center">User</th>
+                                        <th class="text-center">Team1 Answer</th>
+                                        <th class="text-center">Team2 Answer</th>
+                                        <th class="text-center">Answer Time</th>
+                                        <th class="text-center">Update Time</th>
+                                        <th class="text-center">Prize</th>
+                                        <th class="text-center">Award</th>
+                                        <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($match->questions as $question)
+                                    @foreach ($question->answres as $answer)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
-                                            <td class="text-center">
-                                                {{ $question->question }}
+                                            <td class="text-center">{{ $answer->user->name }}</td>
+                                            <td class="text-center">{{ $answer->player1->name }}
+                                                <div class="c-avatar">
+                                                    <img src="{{ $answer->player1->avatar }}" alt="Team1 Player Avatar"
+                                                        width="40px" height="40px">
+                                                </div>
+                                            </td>
+                                            <td class="text-center">{{ $answer->player2->name }}
+                                                <div class="c-avatar">
+                                                    <img src="{{ $answer->player2->avatar }}" alt="Team2 Player Avatar"
+                                                        width="40px" height="40px">
+                                                </div>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('questions.edit', $question->id) }}"
-                                                    class="btn btn-block btn-primary col-md-4">Edit</a>
+                                                {{ $answer->created_at }}
                                             </td>
                                             <td class="text-center">
-                                                <form action="{{ route('questions.destroy', $question->id) }}" method="POST"
+                                                {{ $answer->created_at != $answer->updated_at ? $answer->updated_at : '' }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $answer->award }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('answers.edit', $answer->id) }}"
+                                                    class="btn btn-block btn-primary">Award</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <form action="{{ route('answers.destroy', $answer->id) }}" method="POST"
                                                     class="delete-form mb-0">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <button class="btn btn-block btn-danger col-md-4">Delete</button>
+                                                    <button class="btn btn-block btn-danger">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -66,7 +80,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('questions.create', $match->id) }}" id="add_form">
+            <form method="POST" action="{{ route('questions.create', $question->id) }}" id="add_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -76,10 +90,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Question</label>
+                            <label class="col-md-3 col-form-label" for="password-input">Question String</label>
                             <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Question" name="question" id="question"
-                                    value="{{ old('question') }}" autofocus>
+                                <input class="form-control" type="text" placeholder="question Name" name="question"
+                                    id="question" value="{{ old('question') }}" autofocus>
                             </div>
                         </div>
                     </div>

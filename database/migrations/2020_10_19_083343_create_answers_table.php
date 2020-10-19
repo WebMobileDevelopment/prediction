@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMatchsTable extends Migration
+class CreateAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateMatchsTable extends Migration
      */
     public function up()
     {
-        Schema::create('matchs', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('league_id')->constrained('leagues')->onDelete('cascade');
-            $table->string('name')->nullable();
-            $table->bigInteger('team1_id');
-            $table->bigInteger('team2_id');
+            $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->bigInteger('player1_id')->nullable();
+            $table->bigInteger('player2_id')->nullable();
+            $table->string('award')->nullable();
             $table->string('description')->nullable();
-            $table->integer('answered')->default(0);
-            $table->integer('total_prize')->default(100);
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -37,10 +34,11 @@ class CreateMatchsTable extends Migration
      */
     public function down()
     {
-        Schema::table("matchs", function ($table) {
-            $table->dropForeign(['league_id']);
+        Schema::table("answers", function ($table) {
+            $table->dropForeign(['question_id']);
+            $table->dropForeign(['user_id']);
             $table->dropSoftDeletes();
         });
-        Schema::dropIfExists('matchs');
+        Schema::dropIfExists('answers');
     }
 }

@@ -29,13 +29,13 @@ class HomeController extends Controller
     public function index()
     {
         $role = Auth::user()->role;
-        $redirectTo = '/login';
+        $redirectTo = route('login');
         switch ($role) {
             case 'admin':
-                $redirectTo = '/admin';
+                $redirectTo = route('admin.home');
                 break;
             case 'user':
-                $redirectTo = '/user';
+                $redirectTo = route('user.home');
                 break;
             default:
                 break;

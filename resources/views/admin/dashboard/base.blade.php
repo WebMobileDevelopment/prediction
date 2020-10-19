@@ -38,6 +38,7 @@
 
 <!-- Icons-->
 
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="{{ asset('assets/css/bootstrap-v4.4.1.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/datetimepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
 
@@ -112,7 +113,6 @@
 <script src="{{ asset('assets/js/img_upload.js') }}"></script>
 
 <script>
-    $('.datetimepicker').datetimepicker();
     toastr.options.timeOut = 1000;
     toastr.options.extendedTimeOut = 0;
     $(function() {

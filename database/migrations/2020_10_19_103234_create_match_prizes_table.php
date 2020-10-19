@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateMatchPrizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('match_prizes', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
             $table->foreignId('match_id')->constrained('matchs')->onDelete('cascade');
-            $table->bigInteger('player1_id')->nullable();
-            $table->bigInteger('player2_id')->nullable();
-            $table->integer('prize')->default(100);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('prize')->default(0);
+            $table->timestamp('awarded_at');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -33,12 +32,11 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::table("questions", function ($table) {
-            $table->dropForeign(['player2_id']);
-            $table->dropForeign(['player1_id']);
+        Schema::table("match_prizes", function ($table) {
+            $table->dropForeign(['user_id']);
             $table->dropForeign(['match_id']);
             $table->dropSoftDeletes();
         });
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('match_prizes');
     }
 }

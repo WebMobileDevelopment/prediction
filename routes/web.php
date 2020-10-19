@@ -70,11 +70,39 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{banner}',         'Admin\BannersController@update')->name('banners.update');
             Route::delete('/{banner}',          'Admin\BannersController@delete')->name('banners.destroy');
         });
+        Route::prefix('answres')->group(function () {
+            Route::get('/{question_id}',             'Admin\AnswersController@index')->name('answers');
+            // Route::post('/{match_id}',            'Admin\QuestionsController@create')->name('questions.create');
+            // Route::get('/edit/{question}',    'Admin\QuestionsController@edit')->name('questions.edit');
+            // Route::put('/{question}',         'Admin\QuestionsController@update')->name('questions.update');
+            // Route::delete('/{question}',          'Admin\QuestionsController@delete')->name('questions.destroy');
+        });
         Route::resource('users',        'UsersController')->except(['create', 'store']);
     });
 
     // user protected routes
     Route::group(['middleware' => ['auth', 'user'], 'prefix' => 'user'], function () {
-        Route::get('/', 'User\UserHomeController@index')->name('user.home');
+        Route::get('/home/{game_id?}', 'User\UserHomeController@index')->name('user.home');
+        Route::get('/contact', function () {
+            return  view('user.contact');
+        })->name('user.contact');
+        Route::get('/terms', function () {
+            return  view('user.terms');
+        })->name('user.terms');
+        Route::get('/faq', function () {
+            return  view('user.faq');
+        })->name('user.faq');
+        Route::get('/account', function () {
+            return  view('user.account');
+        })->name('user.account');
+        Route::get('/construction', function () {
+            return  view('user.construction');
+        })->name('user.construction');
+        Route::get('/wallet', function () {
+            return  view('user.wallet');
+        })->name('user.wallet');
+        Route::get('/learning', function () {
+            return  view('user.learning');
+        })->name('user.learning');
     });
 });
