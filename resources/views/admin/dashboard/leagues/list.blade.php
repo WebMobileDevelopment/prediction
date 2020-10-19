@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>All Leagues
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_league">Add
+                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_button">Add
                                 League</button>
                         </div>
 
@@ -19,13 +19,10 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th class="text-center">league Type</th>
+                                        <th class="text-center">Game Type</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Avatar</th>
+                                        <th class="text-center">Short Name</th>
                                         <th class="text-center">Description</th>
-                                        <th class="text-center">Location</th>
-                                        <th class="text-center">Start Time</th>
-                                        <th class="text-center">End Time</th>
                                         <th class="text-center">Teams</th>
                                         <th class="text-center">Matchs</th>
                                         <th class="text-center">Edit</th>
@@ -38,26 +35,20 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $league->game->name }}</td>
                                             <td class="text-center">{{ $league->name }}</td>
-                                            <td class="text-center">
-                                                <div class="c-avatar">
-                                                    <img src="{{ $league->avatar }}" alt="League avatar" width="40px"
-                                                        height="40px">
-                                                </div>
-                                            </td>
+                                            <td class="text-center">{{ $league->short_name }}</td>
                                             <td class="text-center">{{ $league->description }}</td>
-                                            <td class="text-center">{{ $league->location }}</td>
-                                            <td class="text-center">{{ $league->start_time }}</td>
-                                            <td class="text-center">{{ $league->end_time }}</td>
                                             <td class="text-center">
-                                                <a href="{{ url("leagueTeams/" . $league->id) }}"
-                                                    class="btn btn-block btn-success">{{count($league->teams)}} &emsp; Teams</a>
+                                                <a href="{{ route('leagueTeams', $league->id) }}"
+                                                    class="btn btn-block btn-success">{{ count($league->teams) }} &emsp;
+                                                    Teams</a>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url("matchs/" . $league->id) }}"
-                                                    class="btn btn-block btn-success">{{count($league->matchs)}} &emsp; Matchs</a>
+                                                <a href="{{ route('matchs', $league->id) }}"
+                                                    class="btn btn-block btn-success">{{ count($league->matchs) }} &emsp;
+                                                    Matchs</a>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url('/leagues/edit/' . $league->id) }}"
+                                                <a href="{{ route('leagues.edit', $league->id) }}"
                                                     class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td class="text-center">
@@ -81,7 +72,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('leagues.create') }}" id="add_form">
+            <form method="POST" action="{{ route('leagues.create') }}" id="submit_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -91,61 +82,33 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Name</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="league Name" name="name"
-                                    id="league-name" value="{{ old('name') }}" autofocus>
-                            </div>
+                            <label class="col-md-3 col-form-label" for="password-input">Game Type</label>
+                            <select class="form-control col-md-9" id="game_types" name="game_id"
+                                value="{{ old('game_id') }}">
+                                @foreach ($games as $game)
+                                    <option value="{{ $game->id }}">{{ $game->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Game Type</label>
-                            <div class="col-md-9">
-                                <select class="form-control" id="game_types" name="game_id" value="{{ old('game_id') }}">
-                                    @foreach ($games as $game)
-                                        <option value="{{ $game->id }}">{{ $game->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <label class="col-md-3 col-form-label" for="password-input">League Name</label>
+                            <input class="form-control col-md-9" type="text" placeholder="League Name" name="name"
+                                id="league_name" value="{{ old('name') }}" autofocus>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="password-input">Short Name</label>
+                            <input class="form-control col-md-9" type="text" placeholder="Short name" name="short_name"
+                                id="short_name" value="{{ old('short_name') }}" autofocus>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Description</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Description" name="description"
-                                    value="{{ old('description') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Location</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Location" name="location"
-                                    value="{{ old('location') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Start time</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control datetimepicker" name="start_time"
-                                    value="{{ old('start_time') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">End time</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control datetimepicker" name="end_time"
-                                    value="{{ old('end_time') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Avatar</label>
-                            <div class="img_container col-md-9" id="active-avatar">
-                                @include('element.cropper.content')
-                            </div>
-                        </div>
-                        @include('element.cropper.footer')
+                            <input class="form-control col-md-9" type="text" placeholder="Description" name="description"
+                                value="{{ old('description') }}">
+                        </div>                       
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" id="add_button">Create league</button>
+                        <button class="btn btn-primary" type="button" id="submit_button">Create league</button>
                     </div>
                 </div>
             </form>
@@ -162,29 +125,7 @@
     </script>
 
     <script>
-        $(function() {
-            $('.datetimepicker').datetimepicker({
-                // Formats
-                // follow MomentJS docs: https://momentjs.com/docs/#/displaying/format/
-                format: 'DD-MM-YYYY hh:mm A',
-
-                // Your Icons
-                // as Bootstrap 4 is not using Glyphicons anymore
-                icons: {
-                    time: 'fa fa-clock-o',
-                    date: 'fa fa-calendar',
-                    up: 'fa fa-chevron-up',
-                    down: 'fa fa-chevron-down',
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-check',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-times'
-                }
-            });
-            toastr.options.timeOut = 1000;
-            toastr.options.extendedTimeOut = 0;
-
+        $(function() {           
             $(".delete-form").submit(function() {
                 var confirm = prompt("Please enter 'yes' if you are going to delete this league.");
                 if (confirm === 'yes') {
@@ -193,19 +134,23 @@
                     return false; // will halt submission
                 }
             })
-            $("#add_league").click(function() {
+            $("#add_button").click(function() {
                 $("#myModal").modal('show');
             });
-            $("#add_button").click(function() {
-                if (!$("#league-name").val()) {
-                    toastr.error('Please enter league name', 'error!');
+            $("#submit_button").click(function() {
+                if (!$("#game_types").val()) {
+                    toastr.error('Please select game type', 'error!');
                     return false;
                 }
-                if (!$(".img_source").val()) {
-                    toastr.error('Please add avatar image.', 'error!');
-                    return;
+                if (!$("#league_name").val()) {
+                    toastr.error('Please input league name', 'error!');
+                    return false;
                 }
-                $("#add_form").submit();
+                if (!$("#short_name").val()) {
+                    toastr.error('Please input league short name', 'error!');
+                    return false;
+                }
+                $("#submit_form").submit();
             })
         });
 

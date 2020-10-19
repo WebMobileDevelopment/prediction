@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Games;
@@ -15,12 +15,12 @@ class GamesController extends Controller
     }
     public function create(Request $request)
     {
-
         $game = $request->all();
         Games::create([
             'name' => $game['name'],
-            'active_avatar' => $game['base64_img'][0],
-            'inactive_avatar' => $game['base64_img'][1],
+            'description' => $game['description'],
+            'view_order' => $game['view_order'],
+            'menu_icon' => $game['base64_img'],
         ]);
         $request->session()->flash('message', 'New Game type created successfully!');
         return $this->index();
@@ -29,17 +29,15 @@ class GamesController extends Controller
     {
         return view('admin.dashboard.games.edit')->with(['game' => $game]);
     }
-
     public function update(Games $game, Request $request)
     {
         $temp = $request->all();
         $data = array(
             'name' => $temp['name'],
             'description' => $temp['description'],
-            'view_order' => $temp['view_order']
+            'view_order' => $temp['view_order'],
+            'menu_icon' => $temp['base64_img']
         );
-        if (!is_null($temp['base64_img'][0])) $data['active_avatar'] = $temp['base64_img'][0];
-        if (!is_null($temp['base64_img'][1])) $data['inactive_avatar'] = $temp['base64_img'][0];
         $game->update($data);
         $request->session()->flash('message', 'Game updated successfully!');
         return $this->index();

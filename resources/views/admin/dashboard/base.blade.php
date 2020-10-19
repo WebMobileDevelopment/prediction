@@ -43,8 +43,8 @@
 
 <link href="{{ asset('render/css/free.min.css') }}" rel="stylesheet"> <!-- icons -->
 <link href="{{ asset('render/css/flag.min.css') }}" rel="stylesheet"> <!-- icons -->
-<link href="{{ asset('assets/css/cropper-v1.5.6.css') }}" rel="stylesheet"> <!-- icons -->
-<link href="{{ asset('assets/css/cropper_style.css') }}" rel="stylesheet"> <!-- icons -->
+{{-- <link href="{{ asset('assets/css/cropper-v1.5.6.css') }}" rel="stylesheet"> <!-- icons --> --}}
+{{-- <link href="{{ asset('assets/css/cropper_style.css') }}" rel="stylesheet"> <!-- icons --> --}}
 <!-- Main styles for this application-->
 <link href="{{ asset('render/css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('render/css/coreui-chartjs.css') }}" rel="stylesheet">
@@ -107,8 +107,9 @@
 <script src="{{ asset('assets/datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
 
 <script src="{{ asset('assets/js/bootstrap-4.4.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/cropper/cropper-v1.5.6.js') }}"></script>
-<script src="{{ asset('assets/js/cropper/cropper_script.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/cropper/cropper-v1.5.6.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/cropper/cropper_script.js') }}"></script> --}}
+<script src="{{ asset('assets/js/img_upload.js') }}"></script>
 
 <script>
     $('.datetimepicker').datetimepicker();

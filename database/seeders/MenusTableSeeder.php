@@ -63,6 +63,7 @@ class MenusTableSeeder extends Seeder
         $this->insertLink('Leagues', '/admin/leagues', null, 'link', 2, 1, 3);
         $this->insertLink('Teams', '/admin/teams', null, 'link', 2, 1, 4);
         $this->insertLink('Players', '/admin/players', null, 'link', 2, 1, 5);
+        $this->insertLink('Banners', '/admin/banners', null, 'link', 2, 1, 6);
 
         // $this->insertTitle('user,admin', 'Theme');
         // $this->insertLink('user,admin', 'Colors', '/colors', 'cil-drop1');

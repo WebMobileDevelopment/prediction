@@ -22,8 +22,8 @@ for ($i = 0; $i < count($data); $i++) { if ($data[$i]['slug']==='link' ) { echo 
     echo '<a class="c-sidebar-nav-link" href="' . url($data[$i]['href']) . '">' ;
     echo '<span class="c-sidebar-nav-icon"></span>' . $data[$i]['name'] . '</a></li>' ; } elseif
     ($data[$i]['slug']==='dropdown' ) { renderDropdown($data[$i]); } } } } } ?> <div
-    class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ url('/assets/images/logo.png') }}" width="118"
-        height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized"
+    class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="{{ asset('/assets/images/logo.png') }} "
+        width="118" height="46" alt="CoreUI Logo"><img class="c-sidebar-brand-minimized"
         src="{{ asset('/assets/svg/coreui-signet-white.svg') }}" width="118" height="46" alt="CoreUI Logo"></div>
     <ul class="c-sidebar-nav">
         @if (isset($appMenus['sidebar menu']))

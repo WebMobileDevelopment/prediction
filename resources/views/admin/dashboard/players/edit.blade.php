@@ -7,7 +7,7 @@
             width: 100px;
         }
 
-        #update_form .text-center img {
+        #prev_img {
             width: 100px;
         }
 
@@ -21,76 +21,40 @@
                             <i class="fa fa-align-justify"></i> Edit {{ $player->name }}</div>
                         <div class="card-body">
                             <br>
-                            <form method="POST" action="{{ route('players.update', $player->id) }}" id="update_form">
+                            <form method="POST" action="{{ route('players.update', $player->id) }}" id="submit_form">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Name</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" placeholder="Player Name" name="name"
-                                            id="player-name" value="{{ $player->name }}" autofocus>
-                                    </div>
+                                    <label class="col-md-3 col-form-label" for="password-input">Team Name</label>
+                                    <select class="form-control col-md-9" id="team_types" name="team_id">
+                                        @foreach ($teams as $team)
+                                            <option value="{{ $team->id }}"
+                                                {{ $player->team_id == $team->id ? 'selected' : '' }}>
+                                                {{ $team->game->name }} / {{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Team Name</label>
-                                    <div class="col-md-9">
-                                        <select class="form-control" id="player_types" name="team_id"
-                                            value="{{ $player->team_id }}">
-                                            @foreach ($teams as $team)
-                                                <option value="{{ $team->id }}">{{ $team->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label class="col-md-3 col-form-label" for="password-input">Name</label>
+                                    <input class="form-control col-md-9" type="text" placeholder="Player Name" name="name"
+                                        id="player_name" value="{{ $player->name }}" autofocus>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Country</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" placeholder="Country" name="country"
-                                            value="{{ $player->country }}">
+                                    <label class="col-md-3 col-form-label" for="password-input">Description</label>
+                                    <input class="form-control col-md-9" type="text" placeholder="Description"
+                                        name="description" value="{{ $player->description }}">
+                                </div>
+                                <div class="input-group mb- row">
+                                    <span class="col-md-3">Photo / Avatar</span>
+                                    <div class="img_container col-md-9" id="active-avatar">
+                                        <img id="prev_img" alt="Select File" title="Select File" src="{{ $player->avatar }}"
+                                            style="cursor: pointer" />
+                                        <input type="file" id="img_selector" style="display: none" />
+                                        <input type="hidden" id="base64_img" name="base64_img"
+                                            value="{{ $player->avatar }}">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Nationality</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" placeholder="nationality" name="nationality"
-                                            value="{{ $player->nationality }}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">age</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" placeholder="age" name="age"
-                                            value="{{ $player->age }}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Description</label>
-                                    <div class="col-md-9">
-                                        <input class="form-control" type="text" placeholder="Description" name="description"
-                                            value="{{ $player->description }}">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 col-form-label">Avatar</label>
-                                    <div class="col-md-9">
-                                        <div class="row text-center">
-                                            <div class="col-md-6">Origin</div>
-                                            <div class="col-md-6">New</div>
-                                        </div>
-                                        <div class="row text-center">
-                                            <div class="col-md-6"><img src="{{ $player->avatar }}"></div>
-                                            <div class="col-md-6">
-                                                <div class="img_container" id="active-avatar">
-                                                    @include('element.cropper.content')
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @include('element.cropper.footer')
-
-
-                                <button class="btn btn-block btn-success" id="save_button">Save</button>
+                                <button class="btn btn-block btn-success mt-5" id="submit_button">Save</button>
                                 <a href="{{ route('players') }}" class="btn btn-block btn-primary">Return</a>
                             </form>
                         </div>
@@ -105,12 +69,20 @@
 @section('javascript')
     <script>
         $(function() {
-            $("#save_button").click(function() {
-                if (!$("#player-name").val()) {
+            $("#submit_button").click(function() {
+                if (!$("#team_types").val()) {
+                    toastr.error('Please select team', 'error!');
+                    return false;
+                }
+                if (!$("#player_name").val()) {
                     toastr.error('Please enter player name', 'error!');
                     return false;
                 }
-                $("#update_form").submit();
+                if (!$("#base64_img").val()) {
+                    toastr.error('Please select photo/avatar', 'error!');
+                    return false;
+                }
+                $("#submit_form").submit();
             })
         });
 

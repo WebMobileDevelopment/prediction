@@ -48,7 +48,7 @@
                                                 {{ $question->question }}
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url('/questions/edit/' . $question->id) }}"
+                                                <a href="{{ route('questions.edit', $question->id) }}"
                                                     class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td class="text-center">
@@ -121,5 +121,6 @@
                 $("#add_form").submit();
             })
         });
+
     </script>
 @endsection

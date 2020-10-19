@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Games;
 use App\Models\Teams;
 use App\Models\Players;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class PlayersController extends Controller
     public function index()
     {
         $data['teams'] = Teams::orderBy('game_id')->orderBy('name')->get();
+        $data['games'] = Games::orderBy('view_order')->get();
         $data['players'] = Players::orderBy('team_id')->orderBy('name')->get();
         return view('admin.dashboard.players.list')->with($data);
     }
@@ -20,13 +22,10 @@ class PlayersController extends Controller
     {
         $temp = $request->all();
         Players::create([
-            'name' => $temp['name'],
             'team_id' => $temp['team_id'],
-            'country' => $temp['country'],
-            'nationality' => $temp['nationality'],
-            'age' => $temp['age'],
+            'name' => $temp['name'],
             'description' => $temp['description'],
-            'avatar' => $temp['base64_img'][0],
+            'avatar' => $temp['base64_img'],
         ]);
         $request->session()->flash('message', 'New player created successfully!');
         return $this->index();
@@ -42,14 +41,11 @@ class PlayersController extends Controller
     {
         $temp = $request->all();
         $data = array(
-            'name' => $temp['name'],
             'team_id' => $temp['team_id'],
-            'country' => $temp['country'],
-            'nationality' => $temp['nationality'],
-            'age' => $temp['age'],
+            'name' => $temp['name'],
             'description' => $temp['description'],
         );
-        if (!is_null($temp['base64_img'][0])) $data['avatar'] = $temp['base64_img'][0];
+        if (!is_null($temp['base64_img'])) $data['avatar'] = $temp['base64_img'];
         $player->update($data);
         $request->session()->flash('message', 'Player updated successfully!');
         return $this->index();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Games;
@@ -21,12 +21,11 @@ class TeamsController extends Controller
 
         $team = $request->all();
         Teams::create([
-            'name' => $team['name'],
             'game_id' => $team['game_id'],
-            'country' => $team['country'],
-            'location' => $team['location'],
+            'name' => $team['name'],
+            'short_name' => $team['short_name'],
             'description' => $team['description'],
-            'avatar' => $team['base64_img'][0],
+            'avatar' => $team['base64_img'],
         ]);
         $request->session()->flash('message', 'New team created successfully!');
         return $this->index();
@@ -42,13 +41,12 @@ class TeamsController extends Controller
     {
         $temp = $request->all();
         $data = array(
-            'name' => $temp['name'],
             'game_id' => $temp['game_id'],
-            'country' => $temp['country'],
-            'location' => $temp['location'],
+            'name' => $temp['name'],
+            'short_name' => $temp['short_name'],
             'description' => $temp['description'],
+            'avatar' => $temp['base64_img'],
         );
-        if (!is_null($temp['base64_img'][0])) $data['avatar'] = $temp['base64_img'][0];
         $team->update($data);
         $request->session()->flash('message', 'Team updated successfully!');
         return $this->index();

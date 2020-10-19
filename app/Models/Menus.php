@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Menus
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Menus extends Model
 {
+    use SoftDeletes;
     protected $table = 'menus';
     public $timestamps = false; 
 }

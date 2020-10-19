@@ -16,8 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->binary('active_avatar')->nullable();
-            $table->binary('inactive_avatar')->nullable();
+            $table->longText('menu_icon')->nullable();
             $table->string('description')->nullable();
             $table->integer('view_order')->default(10000);
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

@@ -15,15 +15,13 @@ class CreateLeaguesTable extends Migration
     {
         Schema::create('leagues', function (Blueprint $table) {
             $table->id();
-            $table->integer('game_id');
+            $table->foreignId('game_id')->constrained('games')->onDelete('cascade');
             $table->string('name');
-            $table->binary('avatar')->nullable();
+            $table->string('short_name');
             $table->string('description')->nullable();
-            $table->string('location')->nullable();
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +32,9 @@ class CreateLeaguesTable extends Migration
      */
     public function down()
     {
+        Schema::table("leagues", function ($table) {
+            $table->dropForeign(['game_id']);
+        });
         Schema::dropIfExists('leagues');
     }
 }

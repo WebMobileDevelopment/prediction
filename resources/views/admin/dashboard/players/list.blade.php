@@ -1,4 +1,11 @@
 @extends('admin.dashboard.base')
+<style>
+    #prev_img {
+        width: 40px;
+        height: auto;
+    }
+
+</style>
 @section('content')
     <?php $i = 1; ?>
     <div class="container-fluid">
@@ -8,7 +15,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>All Players
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_player">Add
+                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_button">Add
                                 Player</button>
                         </div>
 
@@ -19,13 +26,11 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center">No</th>
+                                        <th class="text-center">Game Type</th>
                                         <th class="text-center">Team Name</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Country</th>
-                                        <th class="text-center">Nationality</th>
-                                        <th class="text-center">Age</th>
+                                        <th class="text-center">Photo / Avatar</th>
                                         <th class="text-center">Description</th>
-                                        <th class="text-center">Avatar</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -34,20 +39,18 @@
                                     @foreach ($players as $player)
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
+                                            <td class="text-center">{{ $player->team->game->name }}</td>
                                             <td class="text-center">{{ $player->team->name }}</td>
                                             <td class="text-center">{{ $player->name }}</td>
-                                            <td class="text-center">{{ $player->country }}</td>
-                                            <td class="text-center">{{ $player->nationality }}</td>
-                                            <td class="text-center">{{ $player->age }}</td>
-                                            <td class="text-center">{{ $player->description }}</td>
                                             <td class="text-center">
                                                 <div class="c-avatar">
                                                     <img src="{{ $player->avatar }}" alt="Top menu active icon" width="40px"
                                                         height="40px">
                                                 </div>
                                             </td>
+                                            <td class="text-center">{{ $player->description }}</td>
                                             <td>
-                                                <a href="{{ url('/players/edit/' . $player->id) }}"
+                                                <a href="{{ route('players.edit', $player->id) }}"
                                                     class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td>
@@ -71,7 +74,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('players.create') }}" id="add_form">
+            <form method="POST" action="{{ route('players.create') }}" id="submit_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -81,61 +84,36 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="password-input">Team Name</label>
+                            <select class="form-control col-md-9" id="team_types" name="team_id">
+                                @foreach ($teams as $team)
+                                    <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }}>
+                                        {{ $team->game->name }} / {{ $team->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Name</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="player Name" name="name"
-                                    id="player-name" value="{{ old('name') }}" autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">team Name</label>
-                            <div class="col-md-9">
-                                <select class="form-control" id="team_types" name="team_id" value="{{ old('team_id') }}">
-                                    @foreach ($teams as $team)
-                                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Country</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="country" name="country"
-                                    value="{{ old('country') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Nationality</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Nationality" name="nationality"
-                                    value="{{ old('nationality') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Age</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Age" name="age"
-                                    value="{{ old('age') }}">
-                            </div>
+                            <input class="form-control col-md-9" type="text" placeholder="Player Name" name="name"
+                                id="player_name" value="{{ old('name') }}" autofocus>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Description</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Description" name="description"
-                                    value="{{ old('description') }}">
-                            </div>
+                            <input class="form-control col-md-9" type="text" placeholder="Description" name="description"
+                                value="{{ old('description') }}">
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Avatar</label>
+                        <div class="input-group mb- row">
+                            <span class="col-md-3">Photo / Avatar</span>
                             <div class="img_container col-md-9" id="active-avatar">
-                                @include('element.cropper.content')
+                                <img id="prev_img" alt="Select File" title="Select File" src="{{ old('base64_img') }}" style="cursor: pointer" />
+                                <input type="file" id="img_selector" style="display: none" />
+                                <input type="hidden" id="base64_img" name="base64_img" value="{{ old('base64_img') }}">
                             </div>
                         </div>
-                        @include('element.cropper.footer')
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" id="add_button">Create player</button>
+                        <button class="btn btn-primary" type="button" id="submit_button">Create player</button>
                     </div>
                 </div>
             </form>
@@ -154,19 +132,27 @@
                     return false; // will halt submission
                 }
             })
-            $("#add_player").click(function() {
+            $("#add_button").click(function() {
+                $("#myModal input[name!='_token']").each(function() {
+                    $(this).val("");
+                });
+                $("#myModal img").attr('src', "");
                 $("#myModal").modal('show');
             });
-            $("#add_button").click(function() {
-                if (!$("#player-name").val()) {
+            $("#submit_button").click(function() {
+                if (!$("#team_types").val()) {
+                    toastr.error('Please select team', 'error!');
+                    return false;
+                }
+                if (!$("#player_name").val()) {
                     toastr.error('Please enter player name', 'error!');
                     return false;
                 }
-                if (!$(".img_source").val()) {
-                    toastr.error('Please add avatar image.', 'error!');
-                    return;
+                if (!$("#base64_img").val()) {
+                    toastr.error('Please select photo / avatar image', 'error!');
+                    return false;
                 }
-                $("#add_form").submit();
+                $("#submit_form").submit();
             })
         });
 

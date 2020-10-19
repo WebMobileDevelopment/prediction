@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\HTTP\Controllers\Controller;
+use App\Models\Games;
 
 class UserHomeController extends Controller
 {
@@ -22,6 +23,7 @@ class UserHomeController extends Controller
      */
     public function index()
     {
-        return view('cropper');
+        $data['games']= Games::orderBy('view_order')->get();
+        return view('user.home')->with($data);
     }
 }

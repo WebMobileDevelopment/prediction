@@ -6,7 +6,7 @@
             width: 100px;
         }
 
-        #update_form .text-center img {
+        #prev_img {
             width: 100px;
         }
 
@@ -20,75 +20,35 @@
                             <i class="fa fa-align-justify"></i> Edit {{ $game->name }}</div>
                         <div class="card-body">
                             <br>
-                            <form method="POST" action="{{ route('games.update', $game->id) }}" id="update_form">
+                            <form method="POST" action="{{ route('games.update', $game->id) }}" id="submit_form">
                                 @csrf
                                 @method('PUT')
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Name</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="Name" name="name" id="game-name"
-                                        value="{{ $game->name }}" autofocus>
+                                <div class="input-group mb-3 row">
+                                    <span class="col-md-3">Name</span>
+                                    <input class="form-control col-md-9" type="text" placeholder="Name" name="name"
+                                        id="game_name" value="{{ $game->name }}" autofocus>
                                 </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">View order</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="View order" name="view_order"
-                                        value="{{ $game->view_order }}">
+                                <div class="input-group mb-3 row">
+                                    <span class="col-md-3">View Order</span>
+                                    <input class="form-control col-md-9" type="text" placeholder="View order"
+                                        name="view_order" value="{{ $game->view_order }}">
                                 </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Description</span>
-                                    </div>
-                                    <input class="form-control" type="text" placeholder="Description" name="description"
-                                        value="{{ $game->description }}">
+                                <div class="input-group mb-3 row">
+                                    <span class="col-md-3">Description</span>
+                                    <input class="form-control col-md-9" type="text" placeholder="Description"
+                                        name="description" value="{{ $game->description }}">
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        Active avatar
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row text-center">
-                                            <div class="col-md-6">Origin</div>
-                                            <div class="col-md-6">New</div>
-                                        </div>
-                                        <div class="row text-center">
-                                            <div class="col-md-6"><img src="{{ $game->active_avatar }}"></div>
-                                            <div class="col-md-6">
-                                                <div class="img_container" id="active-avatar">
-                                                    @include('element.cropper.content')
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="input-group mb-3 row">
+                                    <span class="col-md-3">Menu icon</span>
+                                    <div class="img_container col-md-9" id="active-avatar">
+                                        <img id="prev_img" alt="Select File" title="Select File"
+                                            src="{{ $game->menu_icon }}" style="cursor: pointer" />
+                                        <input type="file" id="img_selector" style="display: none" />
+                                        <input type="hidden" id="base64_img" name="base64_img"
+                                            value="{{ $game->menu_icon }}">
                                     </div>
                                 </div>
-
-                                <div class="row mb-5">
-                                    <div class="col-md-4">
-                                        Inactive avatar
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="row text-center">
-                                            <div class="col-md-6">Origin</div>
-                                            <div class="col-md-6">New</div>
-                                        </div>
-                                        <div class="row text-center">
-                                            <div class="col-md-6"><img src="{{ $game->inactive_avatar }}"></div>
-                                            <div class="col-md-6">
-                                                <div class="img_container" id="inactive-avatar">
-                                                    @include('element.cropper.content')
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @include('element.cropper.footer')
-
-
-                                <button class="btn btn-block btn-success" id="save_button">Save</button>
+                                <button class="btn btn-block btn-success mt-5" id="submit_button">Save</button>
                                 <a href="{{ route('games') }}" class="btn btn-block btn-primary">Return</a>
                             </form>
                         </div>
@@ -102,12 +62,16 @@
 @section('javascript')
     <script>
         $(function() {
-            $("#save_button").click(function() {
-                if (!$("#game-name").val()) {
+            $("#submit_button").click(function() {
+                if (!$("#game_name").val()) {
                     toastr.error('Please enter game name', 'error!');
                     return false;
                 }
-                $("#update_form").submit();
+                if (!$("#base64_img").val()) {
+                    toastr.error('Please select menu icon', 'error!');
+                    return false;
+                }
+                $("#submit_form").submit();
             })
         });
 

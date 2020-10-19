@@ -28,11 +28,11 @@
                                             <td>{{ $user->menuroles }}</td>
                                             <td>{{ $user->email_verified_at }}</td>
                                             <td>
-                                                <a href="{{ url('/users/' . $user->id) }}"
+                                                <a href="{{ route('users', $user->id) }}"
                                                     class="btn btn-block btn-primary">Details</a>
                                             </td>
                                             <td>
-                                                <a href="{{ url('/users/' . $user->id . '/edit') }}"
+                                                <a href="{{ route('users.edit', $user->id) }}"
                                                     class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td>

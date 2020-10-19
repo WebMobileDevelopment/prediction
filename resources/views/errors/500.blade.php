@@ -13,7 +13,7 @@
           <div class="input-prepend input-group">
             <div class="input-group-prepend"><span class="input-group-text">
                 <svg class="c-icon">
-                  <use xlink:href="assets/svg/free-symbol-defs.svg#cui-magnifying-glass"></use>
+                  <use xlink:href="{{ asset('assets/svg/free-symbol-defs.svg#cui-magnifying-glass')}}"></use>
                 </svg></span></div>
             <input class="form-control" id="prependedInput" size="16" type="text" placeholder="What are you looking for?"><span class="input-group-append">
               <button class="btn btn-info" type="button">Search</button></span>

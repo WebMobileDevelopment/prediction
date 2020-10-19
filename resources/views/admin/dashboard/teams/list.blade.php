@@ -1,4 +1,11 @@
 @extends('admin.dashboard.base')
+<style>
+    #prev_img {
+        width: 40px;
+        height: auto;
+    }
+
+</style>
 @section('content')
     <?php $i = 1; ?>
     <div class="container-fluid">
@@ -8,7 +15,8 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i>All Teams
-                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_team">Add team</button>
+                            <button class="btn btn-primary btn-sm btn-pill float-right mr-3" id="add_button">Add
+                                team</button>
                         </div>
 
                         <div class="card-body">
@@ -20,8 +28,7 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">Game Type</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Country</th>
-                                        <th class="text-center">Location</th>
+                                        <th class="text-center">Short Name</th>
                                         <th class="text-center">Avatar</th>
                                         <th class="text-center">Description</th>
                                         <th></th>
@@ -34,8 +41,7 @@
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $team->game->name }}</td>
                                             <td class="text-center">{{ $team->name }}</td>
-                                            <td class="text-center">{{ $team->country }}</td>
-                                            <td class="text-center">{{ $team->location }}</td>
+                                            <td class="text-center">{{ $team->short_name }}</td>
                                             <td class="text-center">
                                                 <div class="c-avatar">
                                                     <img src="{{ $team->avatar }}" alt="Top menu active icon" width="40px"
@@ -44,7 +50,7 @@
                                             </td>
                                             <td>{{ $team->description }}</td>
                                             <td>
-                                                <a href="{{ url('/teams/edit/' . $team->id) }}"
+                                                <a href="{{ route('teams.edit', $team->id) }}"
                                                     class="btn btn-block btn-primary">Edit</a>
                                             </td>
                                             <td>
@@ -68,7 +74,7 @@
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <form method="POST" action="{{ route('teams.create') }}" id="add_form">
+            <form method="POST" action="{{ route('teams.create') }}" id="submit_form">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -78,54 +84,41 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Name</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Team Name" name="name" id="team-name"
-                                    value="{{ old('name') }}" autofocus>
-                            </div>
+                            <label class="col-md-3 col-form-label" for="password-input">Game Type</label>
+                            <select class="form-control col-md-9" id="game_types" name="game_id">
+                                @foreach ($games as $game)
+                                    <option value="{{ $game->id }} {{ old('game_id') == $game->id ? 'selected' : '' }}">
+                                        {{ $game->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Game Type</label>
-                            <div class="col-md-9">
-                                <select class="form-control" id="game_types" name="game_id" value="{{ old('game_id') }}">
-                                    @foreach ($games as $game)
-                                        <option value="{{ $game->id }}">{{ $game->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <label class="col-md-3 col-form-label" for="password-input">Name</label>
+                            <input class="form-control col-md-9" type="text" placeholder="Team Name" name="name"
+                                id="team_name" value="{{ old('name') }}" autofocus>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Country</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="country" name="country"
-                                    value="{{ old('country') }}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Location</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Location" name="location"
-                                    value="{{ old('location') }}">
-                            </div>
+                            <input class="form-control col-md-9" type="text" placeholder="country" name="short_name"
+                                id="short_name" value="{{ old('short_name') }}">
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="password-input">Description</label>
-                            <div class="col-md-9">
-                                <input class="form-control" type="text" placeholder="Description" name="description"
-                                    value="{{ old('description') }}">
-                            </div>
+                            <input class="form-control col-md-9" type="text" placeholder="Description" name="description"
+                                value="{{ old('description') }}">
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="password-input">Avatar</label>
+                        <div class="input-group mb- row">
+                            <span class="col-md-3">Avatar</span>
                             <div class="img_container col-md-9" id="active-avatar">
-                                @include('element.cropper.content')
+                                <img id="prev_img" alt="Select File" title="Select File" src="{{ old('base64_img') }}" style="cursor: pointer" />
+                                <input type="file" id="img_selector" style="display: none" />
+                                <input type="hidden" id="base64_img" name="base64_img" value="{{ old('base64_img') }}">
                             </div>
                         </div>
-                        @include('element.cropper.footer')
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="button" id="add_button">Create team</button>
+                        <button class="btn btn-primary" type="button" id="submit_button">Create team</button>
                     </div>
                 </div>
             </form>
@@ -144,19 +137,31 @@
                     return false; // will halt submission
                 }
             })
-            $("#add_team").click(function() {
+            $("#add_button").click(function() {
+                $("#myModal input[name!='_token']").each(function() {
+                    $(this).val("");
+                });
+                $("#myModal img").attr('src', "");
                 $("#myModal").modal('show');
             });
-            $("#add_button").click(function() {
-                if (!$("#team-name").val()) {
-                    toastr.error('Please enter team name', 'error!');
+            $("#submit_button").click(function() {
+                if (!$("#game_types").val()) {
+                    toastr.error('Please select game type', 'error!');
                     return false;
                 }
-                if (!$(".img_source").val()) {
-                    toastr.error('Please add avatar image.', 'error!');
-                    return;
+                if (!$("#team_name").val()) {
+                    toastr.error('Please input team name', 'error!');
+                    return false;
                 }
-                $("#add_form").submit();
+                if (!$("#short_name").val()) {
+                    toastr.error('Please input short name', 'error!');
+                    return false;
+                }
+                if (!$("#base64_img").val()) {
+                    toastr.error('Please select avatar image', 'error!');
+                    return false;
+                }
+                $("#submit_form").submit();
             })
         });
 

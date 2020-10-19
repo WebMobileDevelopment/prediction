@@ -15,15 +15,16 @@ class CreateMatchsTable extends Migration
     {
         Schema::create('matchs', function (Blueprint $table) {
             $table->id();
-            $table->integer('league_id');
+            $table->foreignId('league_id')->constrained('leagues')->onDelete('cascade');
             $table->string('name')->nullable();
-            $table->integer('team1_id');
-            $table->integer('team2_id');
+            $table->bigInteger('team1_id');
+            $table->bigInteger('team2_id');
             $table->string('description')->nullable();
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +35,10 @@ class CreateMatchsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matches');
+        Schema::table("matchs", function ($table) {
+            $table->dropForeign(['league_id']);
+            $table->dropSoftDeletes();
+        });
+        Schema::dropIfExists('matchs');
     }
 }

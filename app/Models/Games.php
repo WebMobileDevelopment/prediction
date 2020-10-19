@@ -12,21 +12,25 @@ class Games extends Model
     use HasFactory;
 
     protected $table = 'games';
-/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'view_order','active_avatar', 'inactive_avatar',
+        'name', 'menu_icon', 'description', 'view_order',
     ];
     /**
      * Get the User that owns the Notes.
      */
-    // public function user()
-    // {
-    //     return $this->belongsTo('App\Models\User', 'users_id')->withTrashed();
-    // }
+    public function leagues()
+    {
+        return $this->hasMany('App\Models\Leagues', 'game_id')->withTrashed();
+    }
+    public function teams()
+    {
+        return $this->hasMany('App\Models\Teams', 'game_id')->withTrashed();
+    }
 
     /**
      * Get the Status that owns the Notes.

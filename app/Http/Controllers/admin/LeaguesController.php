@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leagues;
@@ -13,22 +13,18 @@ class LeaguesController extends Controller
     public function index()
     {
 
-        $data['leagues'] = Leagues::orderBy('start_time', 'desc')->get();
+        $data['leagues'] = Leagues::orderBy('created_at', 'desc')->get();
         $data['games'] = Games::orderBy('view_order')->get();
         return view('admin.dashboard.leagues.list')->with($data);
     }
     public function create(Request $request)
     {
-
         $league = $request->all();
         Leagues::create([
             'name' => $league['name'],
             'game_id' => $league['game_id'],
-            'avatar' => $league['base64_img'][0],
+            'short_name' => $league['short_name'],
             'description' => $league['description'],
-            'location' => $league['location'],
-            'start_time' => Carbon::create($league['start_time']),
-            'end_time' => Carbon::create($league['start_time']),
         ]);
         $request->session()->flash('message', 'New League created successfully!');
         return $this->index();
@@ -42,17 +38,14 @@ class LeaguesController extends Controller
 
     public function update(Leagues $league, Request $request)
     {
-        $temp = $request->all();
-        $data = array(
-            'name' => $temp['name'],
-            'game_id' => $temp['game_id'],
-            'description' => $temp['description'],
-            'location' => $temp['location'],
-            'start_time' => Carbon::create($temp['start_time']),
-            'end_time' => Carbon::create($temp['start_time']),
-        );
-        if (!is_null($temp['base64_img'][0])) $data['avatar'] = $temp['base64_img'][0];
-        $league->update($data);
+        // $temp = $request->all();
+        // $data = array(
+        //     'name' => $temp['name'],
+        //     'game_id' => $temp['game_id'],
+        //     'short_name' => $temp['short_name'],
+        //     'description' => $temp['description'],
+        // );
+        $league->update($request->all());
         $request->session()->flash('message', 'league updated successfully!');
         return $this->index();
     }

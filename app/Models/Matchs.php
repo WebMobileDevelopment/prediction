@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Matchs extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $table = 'matchs';
     /**
      * The attributes that are mass assignable.
@@ -23,7 +26,7 @@ class Matchs extends Model
      */
     public function league()
     {
-        return $this->belongsTo('App\Models\Leagues', 'league_id');
+        return $this->belongsTo('App\Models\Leagues', 'league_id')->withTrashed();
     }
 
     /**
@@ -31,20 +34,20 @@ class Matchs extends Model
      */
     public function team1()
     {
-        return $this->belongsTo('App\Models\Teams', 'team1_id');
+        return $this->belongsTo('App\Models\Teams', 'team1_id')->withTrashed();
     }
     /**
      * Get the Teams that contained to League.
      */
     public function team2()
     {
-        return $this->belongsTo('App\Models\Teams', 'team2_id');
+        return $this->belongsTo('App\Models\Teams', 'team2_id')->withTrashed();
     }
     /**
      * Get the Teams that contained to League.
      */
     public function questions()
     {
-        return $this->hasMany('App\Models\Questions', 'match_id');
+        return $this->hasMany('App\Models\Questions', 'match_id')->withTrashed();
     }
 }

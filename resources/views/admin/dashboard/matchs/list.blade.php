@@ -55,7 +55,7 @@
                                             <td class="text-center">{{ $match->start_time }}</td>
                                             <td class="text-center">{{ $match->end_time }}</td>
                                             <td class="text-center">
-                                                <a href="{{ url('questions/' . $match->id) }}"
+                                                <a href="{{ route('questions', $match->id) }}"
                                                     class="btn btn-block btn-success">{{ count($match->questions) }} &emsp;
                                                     Questions</a>
                                             </td>
