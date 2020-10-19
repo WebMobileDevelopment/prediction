@@ -150,7 +150,7 @@ class MenuElementController extends Controller
             'roles'    => RolesService::get(),
             'menulist' => Menulist::all(),
             'menuElement' => Menus::where('id', '=', $request->input('id'))->first(),
-            'menuroles' => Menurole::where('menus_id', '=', $request->input('id'))->get()
+            'role' => Menurole::where('menus_id', '=', $request->input('id'))->get()
         ]);
     }
 
@@ -203,7 +203,7 @@ class MenuElementController extends Controller
         return view('dashboard.editmenu.show',[
             'menulist' => Menulist::all(),
             'menuElement' => $menuElement,
-            'menuroles' => Menurole::where('menus_id', '=', $request->input('id'))->get()
+            'role' => Menurole::where('menus_id', '=', $request->input('id'))->get()
         ]);
     }
 

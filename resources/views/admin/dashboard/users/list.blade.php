@@ -25,10 +25,10 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ $user->menuroles }}</td>
+                                            <td>{{ $user->role }}</td>
                                             <td>{{ $user->email_verified_at }}</td>
                                             <td>
-                                                <a href="{{ route('users', $user->id) }}"
+                                                <a href="{{ route('users.show', $user->id) }}"
                                                     class="btn btn-block btn-primary">Details</a>
                                             </td>
                                             <td>

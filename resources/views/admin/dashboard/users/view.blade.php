@@ -34,7 +34,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-left">Role</td>
-                                        <td class="text-left">{{ $user->menuroles }}</td>
+                                        <td class="text-left">{{ $user->role }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-left">Created At</td>

@@ -57,13 +57,13 @@
                                     <div class="col-md-9 col-form-label">
                                         <div class="form-check form-check-inline mr-3">
                                             <input class="form-check-input" id="inline-radio1" type="radio" value="user"
-                                                name="menuroles" {{ $user->menuroles == 'user' ? 'checked' : '' }}>
+                                                name="role" {{ $user->role == 'user' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="inline-radio1">User</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" id="inline-radio2" type="radio"
-                                                value="user,admin" name="menuroles"
-                                                {{ $user->menuroles == 'user,admin' ? 'checked' : '' }}>
+                                                value="admin" name="role"
+                                                {{ $user->role == 'admin' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="inline-radio2">Admin</label>
                                         </div>
                                     </div>

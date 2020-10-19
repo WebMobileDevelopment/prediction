@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{banner}',         'Admin\BannersController@update')->name('banners.update');
             Route::delete('/{banner}',          'Admin\BannersController@delete')->name('banners.destroy');
         });
-        Route::resource('users',        'UsersController', ['as' => 'users'])->except(['create', 'store']);
+        Route::resource('users',        'UsersController')->except(['create', 'store']);
     });
 
     // user protected routes
